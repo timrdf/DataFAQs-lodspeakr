@@ -94,6 +94,18 @@ class C9D {
          </p>
          <p class="step-description">The following SADI services will return lists of FAqT evaluation services. Choose one service and its appropriate input.
          </p>
+         <table about="'.$DATASET_URI.'">
+            <tr>
+               <th>select-faqts</th>
+               <th>Requires input type</th>
+            </tr>
+            {%for i in r.biordf.services%}
+               <tr>
+                  <td property='conversion:todo'><a rel='conversion:todo' href='{{i.service.value}}'>{{i.service.value}}</a></td>
+                  <td property='conversion:todo'><a rel='conversion:todo' href='{{i.input.value}}'>{{i.input.value}}</a></td>
+               </tr>
+            {%endfor%}
+
          <!--?php
             $query  = C9D::bind_variable($queryT,'?:output','datafaqs:FAqTServiceCollection');
             $result = C9D::request_query($query, $ENDPOINT);
