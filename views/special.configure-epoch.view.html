@@ -99,7 +99,7 @@ class C9D {
                <th>select-faqts</th>
                <th>Requires input type</th>
             </tr>
-            {%for i in r.biordf.services%}
+            {%for i in r.biordf.FAqTServiceCollection%}
                <tr>
                   <td property='conversion:todo'><a rel='conversion:todo' href='{{i.service.value}}'>{{i.service.value}}</a></td>
                   <td property='conversion:todo'><a rel='conversion:todo' href='{{i.input.value}}'>{{i.input.value}}</a></td>
@@ -108,7 +108,7 @@ class C9D {
          </table>
       </div>
       <select>
-         {%for i in r.biordf.services%}
+         {%for i in r.biordf.FAqTServiceCollection%}
             <option value='{{i.service.value}}'>{{i.service.value}}</option>
          {%endfor%}
       </select>
