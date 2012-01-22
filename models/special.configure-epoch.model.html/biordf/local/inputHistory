@@ -1,0 +1,10 @@
+prefix prov:   <http://www.w3.org/ns/prov-o/>
+prefix select: <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/>
+
+select distinct ?input
+where {
+   []
+      prov:wasAttributedTo <{{first.FAqTServiceCollection.service.value}}>;
+      prov:used ?input;
+   .
+}
