@@ -14,7 +14,7 @@ if [ -z "$GIT" ]; then
 fi
 
 if [ ! -e "$home" ]; then
-   $GIT clone lodspeakr_repository
+   $GIT clone $lodspeakr_repository
    cd $home
    ./install.sh
 else
