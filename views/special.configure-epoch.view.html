@@ -24,38 +24,6 @@ where {
 ______________________________;
 ?-->
 
-<!--?php
-class C9D {
-
-   static function bind_variable($template, $variable, $binding) {
-      if( strstr($binding,':') ) {
-         # curie
-         return str_replace($variable,' '.$binding.' ',$template);
-      }else {
-         # uri
-         return str_replace($variable,'<'.$binding.'>',$template);
-      }
-   }
-
-   static function request_query($query, $endpoint) {
-      return json_decode(file_get_contents(C9D::prepare_query($query, $endpoint)), true);
-   }
-
-   static function prepare_query($query, $endpoint) {
-      $params           = array();
-      $params["query"]  = $query;
-      $params["output"] = 'sparql';
-      $params["output"] = 'json';
-      $query= $endpoint . '?' . http_build_query($params,'','&') ;
-      return $query;
-   }
-
-   static function pretty_date($XSD_DATETIME) {
-      return substr($XSD_DATETIME,0,10) . ' at ' . substr($XSD_DATETIME,11,5);
-   }
-}
-?-->
-
 <html> 
    <head>                                                                  
    <link rel="stylesheet" type="text/css" media="screen" href="../static/configure-epoch.css" />
@@ -94,57 +62,28 @@ class C9D {
          </p>
          <p class="step-description">The following SADI services will return lists of FAqT evaluation services. Choose one service and its appropriate input.
          </p>
-         <table about="'.$DATASET_URI.'">
-            <tr>
-               <th>select-faqts</th>
-               <th>Requires input type</th>
-            </tr>
-            {%for i in r.biordf.FAqTServiceCollection%}
-               <tr>
-                  <td property='conversion:todo'><a rel='conversion:todo' href='{{i.service.value}}'>{{i.service.value}}</a></td>
-                  <td property='conversion:todo'><a rel='conversion:todo' href='{{i.input.value}}'>{{i.input.value}}</a></td>
-               </tr>
-            {%endfor%}
-         </table>
-      </div>
-      <select>
-         {%for i in r.biordf.FAqTServiceCollection%}
-            <option value='{{i.service.value}}'>{{i.service.value}}</option>
-         {%endfor%}
-      </select>
-         <!--?php
-            $query  = C9D::bind_variable($queryT,'?:output','datafaqs:FAqTServiceCollection');
-            $result = C9D::request_query($query, $ENDPOINT);
-
-            echo '<div>';
-            if( isset($result['results']['bindings']) ) {
-               echo '<table about="'.$DATASET_URI.'">';
-               echo "  <tr><th>select-faqts</th><th>Requires input type</th></tr>\n";
-               foreach( $result['results']['bindings'] as $binding ) {
-                  $service = $binding['service']['value'];
-                  $input = $binding['input']['value'];
-                  echo "  <tr>\n";
-                  echo "     <td property='conversion:todo'><a rel='conversion:todo' href='".$service."'>".$service."</a></td>\n";
-                  echo "     <td property='conversion:todo'><a rel='conversion:todo' href='".$input."'>".$input."</a></td>\n";
-                  echo "  </tr>\n";
-               }
-               echo "</table>";
-            }
-            echo '</div>';
-
-            echo '<div>';
-            if( isset($result['results']['bindings']) ) {
-               echo '<select>';
-               foreach( $result['results']['bindings'] as $binding ) {
-                  $service = $binding['service']['value'];
-                  $input = $binding['input']['value'];
-                  echo "  <option value='".$service."'>".$service."</option>\n";
-               }
-               echo "</select>";
-            }
-            echo '</div>';
-         ?-->
-         with input: (new) <input type="text" name="lname" /> or previous: 
+         <div>
+            <div>
+               <table about="'.$DATASET_URI.'">
+                  <tr>
+                     <th>select-faqts</th>
+                     <th>Requires input type</th>
+                  </tr>
+                  {%for i in r.biordf.FAqTServiceCollection%}
+                     <tr>
+                        <td property='conversion:todo'><a rel='conversion:todo' href='{{i.service.value}}'>{{i.service.value}}</a></td>
+                        <td property='conversion:todo'><a rel='conversion:todo' href='{{i.input.value}}'>{{i.input.value}}</a></td>
+                     </tr>
+                  {%endfor%}
+               </table>
+            </div>
+         <div>
+            <select>
+               {%for i in r.biordf.FAqTServiceCollection%}
+                  <option value='{{i.service.value}}'>{{i.service.value}}</option>
+               {%endfor%}
+            </select>
+         </div>
          <select>
             <option value='history 1'>history 1</option>
             <option value='history 2'>history 2</option>
@@ -158,38 +97,29 @@ class C9D {
          <p>
             <span class="step-num">3</span> <span class="step-title">Select datasets to evaluate</span>
          </p>
-         <!--?php
-            $query  = C9D::bind_variable($queryT,'?:output','datafaqs:DatasetCollection');
-            $result = C9D::request_query($query, $ENDPOINT);
-
-            echo '<div>';
-            if( isset($result['results']['bindings']) ) {
-               echo '<table about="'.$DATASET_URI.'">';
-               echo "  <tr><th>select-datasets</th><th>Requires input type</th></tr>\n";
-               foreach( $result['results']['bindings'] as $binding ) {
-                  $service = $binding['service']['value'];
-                  $input = $binding['input']['value'];
-                  echo "  <tr>\n";
-                  echo "     <td property='conversion:todo'><a rel='conversion:todo' href='".$service."'>".$service."</a></td>\n";
-                  echo "     <td property='conversion:todo'><a rel='conversion:todo' href='".$input."'>".$input."</a></td>\n";
-                  echo "  </tr>\n";
-               }
-               echo "</table>";
-            }
-            echo '</div>';
-
-            echo '<div>';
-            if( isset($result['results']['bindings']) ) {
-               echo '<select>';
-               foreach( $result['results']['bindings'] as $binding ) {
-                  $service = $binding['service']['value'];
-                  $input = $binding['input']['value'];
-                  echo "  <option value='".$service."'>".$service."</option>\n";
-               }
-               echo "</select>";
-            }
-            echo '</div>';
-         ?-->
+         <div>
+         <div>
+            <div>
+               <table about="'.$DATASET_URI.'">
+                  <tr>
+                     <th>select-faqts</th>
+                     <th>Requires input type</th>
+                  </tr>
+                  {%for i in r.biordf.DatasetCollection%}
+                     <tr>
+                        <td property='conversion:todo'><a rel='conversion:todo' href='{{i.service.value}}'>{{i.service.value}}</a></td>
+                        <td property='conversion:todo'><a rel='conversion:todo' href='{{i.input.value}}'>{{i.input.value}}</a></td>
+                     </tr>
+                  {%endfor%}
+               </table>
+            </div>
+         <div>
+            <select>
+               {%for i in r.biordf.DatasetCollection%}
+                  <option value='{{i.service.value}}'>{{i.service.value}}</option>
+               {%endfor%}
+            </select>
+         </div>
 
          with input: (new) <input type="text" name="lname" /> or previous: <select>
          <option value='history 1'>history 1</option>
@@ -206,38 +136,28 @@ class C9D {
                <input type="checkbox" name="augment-datasets" />
                <span class="step-title">Augment dataset descriptions</span>
             </p>
-            <!--?php
-               $query  = C9D::bind_variable($queryT,'?:output','datafaqs:WithReferences');
-               $result = C9D::request_query($query, $ENDPOINT);
-
-               echo '<div>';
-               if( isset($result['results']['bindings']) ) {
-                  echo '<table about="'.$DATASET_URI.'">';
-                  echo "  <tr><th>augment-datasets</th><th>Requires input type</th></tr>\n";
-                  foreach( $result['results']['bindings'] as $binding ) {
-                     $service = $binding['service']['value'];
-                     $input = $binding['input']['value'];
-                     echo "  <tr>\n";
-                     echo "     <td property='conversion:todo'><a rel='conversion:todo' href='".$service."'>".$service."</a></td>\n";
-                     echo "     <td property='conversion:todo'><a rel='conversion:todo' href='".$input."'>".$input."</a></td>\n";
-                     echo "  </tr>\n";
-                  }
-                  echo "</table>";
-               }
-               echo '</div>';
-
-               echo '<div>';
-               if( isset($result['results']['bindings']) ) {
-                  echo '<select>';
-                  foreach( $result['results']['bindings'] as $binding ) {
-                     $service = $binding['service']['value'];
-                     $input = $binding['input']['value'];
-                     echo "  <option value='".$service."'>".$service."</option>\n";
-                  }
-                  echo "</select>";
-               }
-               echo '</div>';
-            ?-->
+            <div>
+               <div>
+                  <table about="'.$DATASET_URI.'">
+                     <tr>
+                        <th>select-faqts</th>
+                        <th>Requires input type</th>
+                     </tr>
+                     {%for i in r.biordf.WithReferences%}
+                        <tr>
+                           <td property='conversion:todo'><a rel='conversion:todo' href='{{i.service.value}}'>{{i.service.value}}</a></td>
+                           <td property='conversion:todo'><a rel='conversion:todo' href='{{i.input.value}}'>{{i.input.value}}</a></td>
+                        </tr>
+                     {%endfor%}
+                  </table>
+               </div>
+            <div>
+               <select>
+                  {%for i in r.biordf.WithReferences%}
+                     <option value='{{i.service.value}}'>{{i.service.value}}</option>
+                  {%endfor%}
+               </select>
+            </div>
             with input: (new) <input type="text" name="lname" /> or previous: <select>
                <option value='history 1'>history 1</option>
                <option value='history 2'>history 2</option>
