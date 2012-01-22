@@ -3,7 +3,7 @@
 # Author: Alvaro Graves (alvaro@graves.cl)
 
 lodspeakr_repository="git://github.com/timrdf/DataFAQs-lodspeakr.git"
-home=`basename $lodspeaker_repository | sed 's/.git//'`
+home=`basename $lodspeakr_repository | sed 's/.git//'`
 
 source ~/.bashrc
 GIT=`which git`
