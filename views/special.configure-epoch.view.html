@@ -105,7 +105,13 @@ class C9D {
                   <td property='conversion:todo'><a rel='conversion:todo' href='{{i.input.value}}'>{{i.input.value}}</a></td>
                </tr>
             {%endfor%}
-
+         </table>
+      </div>
+      <select>
+         {%for i in r.biordf.services%}
+            <option value='{{i.service.value}}'>{{i.service.value}}</option>
+         {%endfor%}
+      </select>
          <!--?php
             $query  = C9D::bind_variable($queryT,'?:output','datafaqs:FAqTServiceCollection');
             $result = C9D::request_query($query, $ENDPOINT);
