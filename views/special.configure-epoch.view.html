@@ -94,7 +94,7 @@ class C9D {
          </p>
          <p class="step-description">The following SADI services will return lists of FAqT evaluation services. Choose one service and its appropriate input.
          </p>
-         <?php
+         <!--?php
             $query  = C9D::bind_variable($queryT,'?:output','datafaqs:FAqTServiceCollection');
             $result = C9D::request_query($query, $ENDPOINT);
 
@@ -125,7 +125,7 @@ class C9D {
                echo "</select>";
             }
             echo '</div>';
-         ?>
+         ?-->
          with input: (new) <input type="text" name="lname" /> or previous: 
          <select>
             <option value='history 1'>history 1</option>
