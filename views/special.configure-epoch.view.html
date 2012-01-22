@@ -1,29 +1,3 @@
-<!--?php
-   $ENDPOINT='http://biordf.net/sparql';
-   $queryT = <<<______________________________
-prefix moby: <http://www.mygrid.org.uk/mygrid-moby-service#>
-prefix void: <http://rdfs.org/ns/void#>
-prefix datafaqs: <http://purl.org/twc/vocab/datafaqs#>
-
-select distinct ?service ?input
-where {
-   graph <http://sadiframework.org/registry/> {
-      ?service
-         moby:hasOperation [
-            a moby:operation;
-            moby:inputParameter [
-               moby:objectType ?input;
-            ];
-            moby:outputParameter [
-               moby:objectType ?:output;
-            ]
-         ]
-      .
-   }
-}
-______________________________;
-?-->
-
 <html> 
    <head>                                                                  
    <link rel="stylesheet" type="text/css" media="screen" href="../static/configure-epoch.css" />
@@ -85,6 +59,11 @@ ______________________________;
             </select>
          </div>
          with input: (new) <input type="text" name="lname" /> or previous:
+         <select>
+            {%for i in r.biordf.local%}
+               <option value='{{i.input.value}}'>{{i.input.value}}</option>
+            {%endfor%}
+         </select>
          <select>
             <option value='history 1'>history 1</option>
             <option value='history 2'>history 2</option>
