@@ -4,7 +4,7 @@ prefix select: <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/>
 select distinct ?input
 where {
    []
-      prov:wasAttributedTo <{{first.FAqTServiceCollection.service.value}}>; # hi
+      prov:wasAttributedTo <{%for row in r.biordf.FAqTServiceCollection%} {%if forloop.first%} {{row.service.value}} {%endif%} {%endfor%}>;
       prov:used ?input;
    .
 }
