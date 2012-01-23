@@ -4,7 +4,7 @@ prefix select: <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/>
 select distinct ?input
 where {
    []
-      prov:wasAttributedTo <{{first.FAqTServiceCollection.service.value}}>;
+      prov:wasAttributedTo <{{first.FAqTServiceCollection.service.value}}>; # hi
       prov:used ?input;
    .
 }
