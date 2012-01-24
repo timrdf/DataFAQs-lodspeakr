@@ -1,10 +1,23 @@
-prefix prov:   <http://www.w3.org/ns/prov-o/>
-prefix select: <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/>
+prefix prov:             <http://www.w3.org/ns/prov-o/>
+
+# These prefixes are somewhat of a hack for https://github.com/alangrafu/lodspeakr/issues/35
+prefix select-faqts:     <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/>
+prefix select-datasets:  <http://sparql.tw.rpi.edu/services/datafaqs/core/select-datasets/>
+prefix augment-datasets: <http://sparql.tw.rpi.edu/services/datafaqs/core/augment-datasets/>
+
+# initial inputs:
+# augment-datasets:with-preferred-uri-and-ckan-meta-void
+# select-datasets:by-ckan-group
+# select-faqts:identity
+# select-faqts:via-sparql-query
 
 select distinct ?input
 where {
    []
-      prov:wasAttributedTo <{%for row in r.biordf.FAqTServiceCollection%} {%if forloop.first%} {{row.service.value}} {%endif%} {%endfor%}>;
+                    # e.g. <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/via-sparql-query>
+      prov:wasAttributedTo <{%for row in r.biordf.FAqTServiceCollection%}{%if forloop.first%}{{row.service.value}}{%endif%}{%endfor%}>;
+                         # <{{first.biordf.FAqTServiceCollection.service.value}}>; # https://github.com/alangrafu/lodspeakr/issues/11
       prov:used ?input;
+          # e.g. 
    .
 }
