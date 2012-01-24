@@ -18,21 +18,20 @@
             service = e.currentTarget.value;
 
             // Hack https://github.com/alangrafu/lodspeakr/issues/35
-            service = service.replace('http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/', 'select-faqts:');
-            service = service.replace('http://sparql.tw.rpi.edu/services/datafaqs/core/select-datasets/', 'select-datasets');
-            service = service.replace('http://sparql.tw.rpi.edu/services/datafaqs/core/augment-datasets/', 'augment-datasets:');
+            service = encodeURIComponent(encodeURIComponent(encodeURIComponent(service)));
 
-            $(e.currentTarget).after('<p>http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/special/service-history/'+service+'</p>');
+            $(e.currentTarget).after('<p>http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/service-history/'+service+'</p>');
 
-            // http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/special/service-history/select-faqts:via-sparql-query
+            // http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/service-history/select-faqts:via-sparql-query
+            // http%25253A%25252F%25252Fsparql.tw.rpi.edu%25252Fservices%25252Fdatafaqs%25252Fcore%25252Fselect-faqts%25252Fvia-sparql-query
             // returns
             // https://raw.github.com/timrdf/DataFAQs/master/services/sadi/core/select-faqts/via-sparql-query-materials/sample-inputs/from-official-sadi-registry.ttl
 
-            // http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/special/service-history/select-faqts:select-datasets:by-ckan-group
+            // http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/service-history/select-faqts:select-datasets:by-ckan-group
             // returns
             // https://raw.github.com/timrdf/DataFAQs/master/services/sadi/core/select-datasets/by-ckan-group-materials/sample-inputs/thedatahub-datafaqs.ttl
    
-            // aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/special/service-history/augment-datasets:with-preferred-uri-and-ckan-meta-void
+            // aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/service-history/augment-datasets:with-preferred-uri-and-ckan-meta-void
             // returns
             // http://sparql.tw.rpi.edu/datafaqs/epoch/2012-01-21/config/datasets
          });
