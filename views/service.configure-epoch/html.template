@@ -1,11 +1,19 @@
 <html> 
    <head>                                                                  
-      <link rel="stylesheet" type="text/css" media="screen" href="../static/configure-epoch.css" />
-      <script type="text/javascript" src="../static/jquery-1.7.1.js"></script>          
+      <link rel="stylesheet" type="text/css" media="screen" href="static/configure-epoch.css" />
+      <script type="text/javascript" src="static/jquery-1.7.1.js"></script>          
       <script type="text/javascript">                                         
 
       $(document).ready(function() {
 
+         $('.hide').hide();
+         $('#augment-datasets-checkbox').change(function(e) {
+            if( $('#augment-datasets-checkbox')[0].checked ) {
+               $('.hide').show('slow');
+            }else {
+               $('.hide').hide('slow');
+            }
+         });
          $("select.core.service").change(function(e) {
             service = e.currentTarget.value;
 
@@ -27,7 +35,7 @@
             // aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/special/service-history/augment-datasets:with-preferred-uri-and-ckan-meta-void
             // returns
             // http://sparql.tw.rpi.edu/datafaqs/epoch/2012-01-21/config/datasets
-         })
+         });
 
       });
 
@@ -98,9 +106,9 @@
          <p>
             <span class="step-num">3</span> <span class="step-title">Select datasets to evaluate</span>
          </p>
-         <table about="'.$DATASET_URI.'">
+         <table>
             <tr>
-               <th>select-faqts</th>
+               <th>select-datasets</th>
                <th>Requires input type</th>
             </tr>
             {%for i in r.biordf.DatasetCollection%}
@@ -127,34 +135,36 @@
          <div id="augment-datasets" class="datasets configuration">
             <p>
                <span class="step-num">3.1</span> 
-               <input type="checkbox" name="augment-datasets" />
+               <input type="checkbox" id="augment-datasets-checkbox" />
                <span class="step-title">Augment dataset descriptions</span>
             </p>
-            <table>
-               <tr>
-                  <th>select-faqts</th>
-                  <th>Requires input type</th>
-               </tr>
-               {%for i in r.biordf.WithReferences%}
+            <div class="hide">
+               <table>
                   <tr>
-                     <td><a href='{{i.service.value}}'>{{i.service.value}}</a></td>
-                     <td><a href='{{i.input.value}}'>{{i.input.value}}</a></td>
+                     <th>augment-datasets</th>
+                     <th>Requires input type</th>
                   </tr>
-               {%endfor%}
-            </table>
-            <select class="core service">>
-               {%for i in r.biordf.WithReferences%}
-                  <option value='{{i.service.value}}'>{{i.service.value}}</option>
-               {%endfor%}
-            </select>
-            with input: (new) <input type="text" name="lname" /> or previous: 
-            <select>
-               <option value='previous input 1'>previous input 1</option>
-               <option value='previous input 2'>previous input 2</option>
-               <option value='previous input 3'>previous input 3</option>
-               <option value='previous input 4'>previous input 4</option>
-               <option value='previous input 5'>previous input 5</option>
-            </select>
+                  {%for i in r.biordf.WithReferences%}
+                     <tr>
+                        <td><a href='{{i.service.value}}'>{{i.service.value}}</a></td>
+                        <td><a href='{{i.input.value}}'>{{i.input.value}}</a></td>
+                     </tr>
+                  {%endfor%}
+               </table>
+               <select class="core service">
+                  {%for i in r.biordf.WithReferences%}
+                     <option value='{{i.service.value}}'>{{i.service.value}}</option>
+                  {%endfor%}
+               </select>
+               with input: (new) <input type="text" name="lname" /> or previous: 
+               <select>
+                  <option value='previous input 1'>previous input 1</option>
+                  <option value='previous input 2'>previous input 2</option>
+                  <option value='previous input 3'>previous input 3</option>
+                  <option value='previous input 4'>previous input 4</option>
+                  <option value='previous input 5'>previous input 5</option>
+               </select>
+            </div>
          </div>
 
       </div> <!-- select-datasets -->
