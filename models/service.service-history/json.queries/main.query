@@ -1,0 +1,13 @@
+prefix prov:   <http://www.w3.org/ns/prov-o/>
+prefix select-faqts:     <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/>
+prefix select-datasets:  <http://sparql.tw.rpi.edu/services/datafaqs/core/select-datasets/>
+prefix augment-datasets: <http://sparql.tw.rpi.edu/services/datafaqs/core/augment-datasets/>
+
+select distinct ?input
+where {
+   []
+      #prov:wasAttributedTo {{base.args.arg0}};
+      prov:wasAttributedTo <{{base.args.arg0|urldecode}}>;
+      prov:used            ?input;
+   .
+}
