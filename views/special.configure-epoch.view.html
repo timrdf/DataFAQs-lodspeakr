@@ -1,20 +1,40 @@
 <html> 
    <head>                                                                  
-   <link rel="stylesheet" type="text/css" media="screen" href="../static/configure-epoch.css" />
-   <script type="text/javascript" src="../static/jquery-1.7.1.js"></script>          
-   <script type="text/javascript">                                         
+      <link rel="stylesheet" type="text/css" media="screen" href="../static/configure-epoch.css" />
+      <script type="text/javascript" src="../static/jquery-1.7.1.js"></script>          
+      <script type="text/javascript">                                         
 
       $(document).ready(function() {
 
-         $("a").click(function() {
-            alert("Hello world!");
-         });
+         $("select.core.service").change(function(e) {
+            service = e.currentTarget.value;
+
+            // Hack https://github.com/alangrafu/lodspeakr/issues/35
+            service = service.replace('http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/', 'select-faqts:');
+            service = service.replace('http://sparql.tw.rpi.edu/services/datafaqs/core/select-datasets/', 'select-datasets');
+            service = service.replace('http://sparql.tw.rpi.edu/services/datafaqs/core/augment-datasets/', 'augment-datasets:');
+
+            $(e.currentTarget).after('<p>http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/special/service-history/'+service+'</p>');
+
+            // http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/special/service-history/select-faqts:via-sparql-query
+            // returns
+            // https://raw.github.com/timrdf/DataFAQs/master/services/sadi/core/select-faqts/via-sparql-query-materials/sample-inputs/from-official-sadi-registry.ttl
+
+            // http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/special/service-history/select-faqts:select-datasets:by-ckan-group
+            // returns
+            // https://raw.github.com/timrdf/DataFAQs/master/services/sadi/core/select-datasets/by-ckan-group-materials/sample-inputs/thedatahub-datafaqs.ttl
+   
+            // aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/special/service-history/augment-datasets:with-preferred-uri-and-ckan-meta-void
+            // returns
+            // http://sparql.tw.rpi.edu/datafaqs/epoch/2012-01-21/config/datasets
+         })
 
       });
 
-   </script>                                                               
+      </script>                                                               
    </head>                                                              
-   <body>                                                               
+   <body xmlns:datafaqs="http://purl.org/twc/vocab/datafaqs#"
+         xmlns:prov="http://www.w3.org/ns/prov-o/">
       <div>
          <center>
             <a href="https://github.com/timrdf/DataFAQs/wiki">
@@ -31,45 +51,46 @@
       </div>
 
       <div id="select-faqts" class="faqts configuration">
+         <p>This gets the <a href="{%for row in r.biordf.FAqTServiceCollection%} {%if forloop.first%} {{row.service.value}} {%endif%} {%endfor%}">first service in r.biordf.FAqTServiceCollection</a>, but the identical code in <a href="https://github.com/timrdf/DataFAQs-lodspeakr/blob/master/models/special.configure-epoch.model.html/biordf/local/inputHistory">the nested query</a> results in an empty expansion <tt>prov:wasAttributedTo <></tt>.
+         </p>
+         <p>
+            <a href="{{first.biordf.FAqTServiceCollection.service.value}}">first.biordf.FAqTServiceCollection.service.value</a>
+         </p>
          <p>
             <span class="step-num">2</span> <span class="step-title">Select evaluation services to apply</span>
          </p>
          <p class="step-description">The following SADI services will return lists of FAqT evaluation services. Choose one service and its appropriate input.
          </p>
-         <div>
-            <div>
-               <table about="'.$DATASET_URI.'">
-                  <tr>
-                     <th>select-faqts</th>
-                     <th>Requires input type</th>
-                  </tr>
-                  {%for i in r.biordf.FAqTServiceCollection%}
-                     <tr>
-                        <td property=''><a rel='' href='{{i.service.value}}'>{{i.service.value}}</a></td>
-                        <td property=''><a rel='' href='{{i.input.value}}'>{{i.input.value}}</a></td>
-                     </tr>
-                  {%endfor%}
-               </table>
-            </div>
-         <div>
-            <select>
-               {%for i in r.biordf.FAqTServiceCollection%}
-                  <option value='{{i.service.value}}'>{{i.service.value}}</option>
-               {%endfor%}
-            </select>
-         </div>
+         <table>
+            <tr>
+               <th>select-faqts</th>
+               <th>Requires input type</th>
+            </tr>
+            {%for i in r.biordf.FAqTServiceCollection%}
+               <tr>
+                  <td about="{{i.service.value}}" typeof="datafaqs:FAqTSelector"><a href='{{i.service.value}}'>{{i.service.value}}</a></td>
+                  <td about='{{i.input.value}}'><a href='{{i.input.value}}'>{{i.input.value}}</a></td>
+               </tr>
+            {%endfor%}
+         </table>
+         <select class="core service">
+            {%for i in r.biordf.FAqTServiceCollection%}
+               <option value='{{i.service.value}}'>{{i.service.value}}</option>
+            {%endfor%}
+         </select>
          with input: (new) <input type="text" name="lname" /> or previous:
          <select>
-            {%for i in r.biordf.local%}
-               <option value='{{i.input.value}}'>{{i.input.value}}</option>
+            <option value='previous input 1'>from query</option>
+            {%for row in r.biordf.FAqTServiceCollection.local.inputHistory%}
+               <option value='{{row.input.value}}'>{{row.input.value}}</option>
             {%endfor%}
          </select>
          <select>
-            <option value='history 1'>history 1</option>
-            <option value='history 2'>history 2</option>
-            <option value='history 3'>history 3</option>
-            <option value='history 4'>history 4</option>
-            <option value='history 5'>history 5</option>
+            <option value='previous input 1'>previous input 1</option>
+            <option value='previous input 2'>previous input 2</option>
+            <option value='previous input 3'>previous input 3</option>
+            <option value='previous input 4'>previous input 4</option>
+            <option value='previous input 5'>previous input 5</option>
          </select>
       </div>
 
@@ -77,38 +98,31 @@
          <p>
             <span class="step-num">3</span> <span class="step-title">Select datasets to evaluate</span>
          </p>
-         <div>
-         <div>
-            <div>
-               <table about="'.$DATASET_URI.'">
-                  <tr>
-                     <th>select-faqts</th>
-                     <th>Requires input type</th>
-                  </tr>
-                  {%for i in r.biordf.DatasetCollection%}
-                     <tr>
-                        <td property=''><a rel='' href='{{i.service.value}}'>{{i.service.value}}</a></td>
-                        <td property=''><a rel='' href='{{i.input.value}}'>{{i.input.value}}</a></td>
-                     </tr>
-                  {%endfor%}
-               </table>
-            </div>
-         <div>
-            <select>
-               {%for i in r.biordf.DatasetCollection%}
-                  <option value='{{i.service.value}}'>{{i.service.value}}</option>
-               {%endfor%}
-            </select>
-         </div>
-
-         with input: (new) <input type="text" name="lname" /> or previous: <select>
-         <option value='history 1'>history 1</option>
-         <option value='history 2'>history 2</option>
-         <option value='history 3'>history 3</option>
-         <option value='history 4'>history 4</option>
-         <option value='history 5'>history 5</option>
+         <table about="'.$DATASET_URI.'">
+            <tr>
+               <th>select-faqts</th>
+               <th>Requires input type</th>
+            </tr>
+            {%for i in r.biordf.DatasetCollection%}
+               <tr>
+                  <td><a href='{{i.service.value}}'>{{i.service.value}}</a></td>
+                  <td><a href='{{i.input.value}}'>{{i.input.value}}</a></td>
+               </tr>
+            {%endfor%}
+         </table>
+         <select class="core service">
+            {%for i in r.biordf.DatasetCollection%}
+               <option value='{{i.service.value}}'>{{i.service.value}}</option>
+            {%endfor%}
          </select>
-
+         with input: (new) <input type="text" name="lname" /> or previous: 
+         <select>
+            <option value='previous input 1'>previous input 1</option>
+            <option value='previous input 2'>previous input 2</option>
+            <option value='previous input 3'>previous input 3</option>
+            <option value='previous input 4'>previous input 4</option>
+            <option value='previous input 5'>previous input 5</option>
+         </select>
 
          <div id="augment-datasets" class="datasets configuration">
             <p>
@@ -116,34 +130,30 @@
                <input type="checkbox" name="augment-datasets" />
                <span class="step-title">Augment dataset descriptions</span>
             </p>
-            <div>
-               <div>
-                  <table about="'.$DATASET_URI.'">
-                     <tr>
-                        <th>select-faqts</th>
-                        <th>Requires input type</th>
-                     </tr>
-                     {%for i in r.biordf.WithReferences%}
-                        <tr>
-                           <td property=''><a rel='' href='{{i.service.value}}'>{{i.service.value}}</a></td>
-                           <td property=''><a rel='' href='{{i.input.value}}'>{{i.input.value}}</a></td>
-                        </tr>
-                     {%endfor%}
-                  </table>
-               </div>
-            <div>
-               <select>
-                  {%for i in r.biordf.WithReferences%}
-                     <option value='{{i.service.value}}'>{{i.service.value}}</option>
-                  {%endfor%}
-               </select>
-            </div>
-            with input: (new) <input type="text" name="lname" /> or previous: <select>
-               <option value='history 1'>history 1</option>
-               <option value='history 2'>history 2</option>
-               <option value='history 3'>history 3</option>
-               <option value='history 4'>history 4</option>
-               <option value='history 5'>history 5</option>
+            <table>
+               <tr>
+                  <th>select-faqts</th>
+                  <th>Requires input type</th>
+               </tr>
+               {%for i in r.biordf.WithReferences%}
+                  <tr>
+                     <td><a href='{{i.service.value}}'>{{i.service.value}}</a></td>
+                     <td><a href='{{i.input.value}}'>{{i.input.value}}</a></td>
+                  </tr>
+               {%endfor%}
+            </table>
+            <select class="core service">>
+               {%for i in r.biordf.WithReferences%}
+                  <option value='{{i.service.value}}'>{{i.service.value}}</option>
+               {%endfor%}
+            </select>
+            with input: (new) <input type="text" name="lname" /> or previous: 
+            <select>
+               <option value='previous input 1'>previous input 1</option>
+               <option value='previous input 2'>previous input 2</option>
+               <option value='previous input 3'>previous input 3</option>
+               <option value='previous input 4'>previous input 4</option>
+               <option value='previous input 5'>previous input 5</option>
             </select>
          </div>
 
