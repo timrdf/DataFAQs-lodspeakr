@@ -6,18 +6,18 @@ prefix select-datasets:  <http://sparql.tw.rpi.edu/services/datafaqs/core/select
 prefix augment-datasets: <http://sparql.tw.rpi.edu/services/datafaqs/core/augment-datasets/>
 
 # initial inputs:
-# augment-datasets:with-preferred-uri-and-ckan-meta-void
-# select-datasets:by-ckan-group
-# select-faqts:identity
 # select-faqts:via-sparql-query
+# select-faqts:identity
+# select-datasets:by-ckan-group
+# augment-datasets:with-preferred-uri-and-ckan-meta-void
 
 select distinct ?input
 where {
    []
                     # e.g. <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/via-sparql-query>
-      prov:wasAttributedTo <{%for row in r.biordf.FAqTServiceCollection%}{%if forloop.first%}{{row.service.value}}{%endif%}{%endfor%}>;
-                         # <{{first.biordf.FAqTServiceCollection.service.value}}>; # https://github.com/alangrafu/lodspeakr/issues/11
+      prov:wasAttributedToo {%for row in r.biordf.FAqTServiceCollection%}{%if forloop.first%}{{row.service.value}}{%endif%}{%endfor%};
+                         # {{first.biordf.FAqTServiceCollection.service.value}}; # https://github.com/alangrafu/lodspeakr/issues/11
       prov:used ?input;
-          # e.g. 
+          # e.g. https://raw.github.com/timrdf/DataFAQs/master/services/sadi/core/select-faqts/via-sparql-query-materials/sample-inputs/from-official-sadi-registry.ttl
    .
 }
