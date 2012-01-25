@@ -18,7 +18,7 @@
                $('.hide').hide('slow');
             }
          });
-         $("select.core.service").change(function(e) {
+         $("select.core-service").change(function(e) {
             service = e.currentTarget.value;
 
             // Hack https://github.com/alangrafu/lodspeakr/issues/35
@@ -42,7 +42,7 @@
             $.ajax({
                url     : 'http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/service-history/'+service, // TODO: replace with base.home
                headers : { "Accept" : "application/json" },
-               context : $(e.currentTarget).siblings('select.core.service.input')[0], // becomes 'this' in success function.
+               context : $(e.currentTarget).siblings('select.core.input')[0], // Becomes 'this' in success function.
                success : function(json){
                   select = $(this);
                   $(this).find('option').remove();
@@ -98,13 +98,13 @@
                </tr>
             {%endfor%}
          </table>
-         <select class="core service">
+         <select class="core-service">
             {%for i in r.biordf.FAqTServiceCollection%}
                <option value='{{i.service.value}}'>{{i.service.value}}</option>
             {%endfor%}
          </select>
          with input: (new) <input type="text" name="lname" /> or previous:
-         <select class="core service input">
+         <select class="core input">
             <option value='previous input 1'>from query</option>
             {%for row in r.biordf.FAqTServiceCollection.local.inputHistory%}
                <option value='{{row.input.value}}'>{{row.input.value}}</option>
@@ -128,13 +128,13 @@
                </tr>
             {%endfor%}
          </table>
-         <select class="core service">
+         <select class="core-service">
             {%for i in r.biordf.DatasetCollection%}
                <option value='{{i.service.value}}'>{{i.service.value}}</option>
             {%endfor%}
          </select>
          with input: (new) <input type="text" name="lname" /> or previous: 
-         <select class="core service input">
+         <select class="core input">
             <option value='previous input 1'>previous input 1</option>
             <option value='previous input 2'>previous input 2</option>
             <option value='previous input 3'>previous input 3</option>
@@ -161,13 +161,13 @@
                      </tr>
                   {%endfor%}
                </table>
-               <select class="core service">
+               <select class="core-service">
                   {%for i in r.biordf.WithReferences%}
                      <option value='{{i.service.value}}'>{{i.service.value}}</option>
                   {%endfor%}
                </select>
                with input: (new) <input type="text" name="lname" /> or previous: 
-               <select>
+               <select class="core input">
                   <option value='previous input 1'>previous input 1</option>
                   <option value='previous input 2'>previous input 2</option>
                   <option value='previous input 3'>previous input 3</option>
