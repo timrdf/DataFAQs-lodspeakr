@@ -6,7 +6,8 @@ prefix augment-datasets: <http://sparql.tw.rpi.edu/services/datafaqs/core/augmen
 select distinct ?input
 where {
    []
-      prov:wasAttributedTo {{base.args.arg0}};
+      #prov:wasAttributedTo {{base.args.arg0}};
+      prov:wasAttributedTo <{{base.args.arg0|urldecode}}>;
       prov:used            ?input;
    .
 }
