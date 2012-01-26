@@ -1,0 +1,5 @@
+[
+   {% for row in r.main %}
+      "{{row.input.value}}"{%if !forloop.last%},{%endif%}
+   {% endfor %}
+]

@@ -1,0 +1,9 @@
+<html>
+<body>
+   <select>
+   {% for row in r.main %}
+      <option value="{{row.input.value}}">{{row.input.value}}</option>
+   {% endfor %}
+   </select>
+</body>
+</html>
