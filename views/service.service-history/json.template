@@ -1,5 +1,5 @@
 [
-   {% for row in r.main %}
+   {% for row in models.main %}
       "{{row.input.value}}"{%if !forloop.last%},{%endif%}
    {% endfor %}
 ]

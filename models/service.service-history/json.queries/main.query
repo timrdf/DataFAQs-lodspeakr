@@ -5,9 +5,11 @@ prefix augment-datasets: <http://sparql.tw.rpi.edu/services/datafaqs/core/augmen
 
 select distinct ?input
 where {
+   graph ?g {
    []
       #prov:wasAttributedTo {{base.args.arg0}};
-      prov:wasAttributedTo <{{base.args.arg0|urldecode}}>;
+      prov:wasAttributedTo <{{lodspk.args.arg0|urldecode}}>;
       prov:used            ?input;
    .
+}
 }
