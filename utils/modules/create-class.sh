@@ -23,19 +23,19 @@ viewHtml=$(cat <<VIEW
     <html xmlns="http://www.w3.org/1999/xhtml" {% for i, ns in base.ns %}xmlns:{{i}}="{{ns}}" 
     {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
     <head>
-    <title>Page about {{base.this.value}}</title>
-    <link href="{{base.baseUrl}}/lodspeakr/css/basic.css" rel="stylesheet" type="text/css" media="screen" />
-    <link rel="alternate" type="application/rdf+xml" title="RDF/XML Version" href="{{base.this.value}}.rdf" />
-    <link rel="alternate" type="text/turtle" title="Turtle Version" href="{{base.this.value}}.ttl" />
-    <link rel="alternate" type="text/plain" title="N-Triples Version" href="{{base.this.value}}.nt" />
-    <link rel="alternate" type="application/json" title="RDFJSON Version" href="{{base.this.value}}.json" />
+    <title>Page about {{lodspk.this.value}}</title>
+    <link href="{{lodspk.baseUrl}}/lodspeakr/css/basic.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="alternate" type="application/rdf+xml" title="RDF/XML Version" href="{{lodspk.this.value}}.rdf" />
+    <link rel="alternate" type="text/turtle" title="Turtle Version" href="{{lodspk.this.value}}.ttl" />
+    <link rel="alternate" type="text/plain" title="N-Triples Version" href="{{lodspk.this.value}}.nt" />
+    <link rel="alternate" type="application/json" title="RDFJSON Version" href="{{lodspk.this.value}}.json" />
   </head>
-  <body about="{{base.this.value}}">
-    <h1>Page about <a href='{{base.this.value}}'>{{base.this.curie}}</a></h1>
+  <body about="{{lodspk.this.value}}">
+    <h1>Page about <a href='{{lodspk.this.value}}'>{{lodspk.this.curie}}</a></h1>
   <div>
-    <h2>Information from {{base.this.curie}}</h2>
+    <h2>Information from {{lodspk.this.curie}}</h2>
     <table>
-    {% for row in r.main %}
+    {% for row in models.main %}
 
       {% if row.s1%}
       <tr>
@@ -53,9 +53,9 @@ viewHtml=$(cat <<VIEW
     </table>
 
     <br/><br/>
-    <h2>Information pointing to {{base.this.curie}}</h2>
+    <h2>Information pointing to {{lodspk.this.curie}}</h2>
     <table>
-    {% for row in r.main %}
+    {% for row in models.main %}
       {% if row.s2%}
      <tr>
         <td><a href='{{row.s2.value}}'>{{row.s2.curie}}</a></td>
@@ -76,7 +76,7 @@ DESCRIBE ?resource WHERE {
 QUERY)
 
 viewRdf=$(cat <<VIEW
-{{r|safe}}
+{{models.main|safe}}
 VIEW)
 
 modelTtl=$modelRdf
