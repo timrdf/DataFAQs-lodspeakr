@@ -9,7 +9,7 @@ class ClassModule extends abstractModule{
   	global $uri;
   	global $acceptContentType;
   	global $endpoints;
-  	global $base;
+  	global $lodspk;
   	
   	require_once('classes/MetaDb.php');
   	$metaDb = new MetaDb($conf['metadata']['db']['location']);
@@ -37,7 +37,7 @@ class ClassModule extends abstractModule{
   	global $uri;
   	global $acceptContentType;
   	global $endpoints;
-  	global $base;
+  	global $lodspk;
   	global $results;
   	global $first;
   	list($res, $page, $format) = $pair;
@@ -50,7 +50,7 @@ class ClassModule extends abstractModule{
   	if($conf['mirror_external_uris']){
   	  $localUri = preg_replace("|^".$conf['ns']['local']."|", $conf['basedir'], $res);
   	}
-
+  	
   	$extension = Utils::getExtension($format); 
   	
   	/*Redefine Content type based on the
@@ -62,32 +62,36 @@ class ClassModule extends abstractModule{
   	$t=Queries::getClass($uri, $endpoints['local']);
   	
   	list($modelFile, $viewFile) = $this::getModelandView($t, $extension);
-  	$base = $conf['view']['standard'];
-  	$base['type'] = $modelFile;
-  	$base['this']['value'] = $uri;
-  	$base['this']['curie'] = Utils::uri2curie($uri);
-  	$base['thislocal']['value'] = $localUri;
-  	$base['thislocal']['curie'] = Utils::uri2curie($localUri);
+  	$lodspk = $conf['view']['standard'];
+  	if($viewFile == null){
+  	  $lodspk['transform_select_query'] = true;
+  	}
+  	$lodspk['type'] = $modelFile;
+  	$lodspk['this']['value'] = $uri;
+  	$lodspk['this']['curie'] = Utils::uri2curie($uri);
+  	$lodspk['thislocal']['value'] = $localUri;
+  	$lodspk['thislocal']['curie'] = Utils::uri2curie($localUri);
   	
-  	$base['this']['contentType'] = $acceptContentType;
-  	$base['model']['directory'] = $conf['model']['directory'];
-  	$base['view']['directory'] = $conf['view']['directory'];
-  	$base['ns'] = $conf['ns'];
+  	$lodspk['this']['extension'] = $extension;
+  	$lodspk['this']['contentType'] = $acceptContentType;
+  	$lodspk['model']['directory'] = $conf['model']['directory'];
+  	$lodspk['view']['directory'] = $conf['view']['directory'];
+  	$lodspk['ns'] = $conf['ns'];
   	
   	
   	chdir($conf['home'].$conf['model']['directory']);
   	
   	Utils::queryFile($modelFile, $endpoints['local'], $results, $first);
   	$results = Utils::internalize($results); 
-
-  	$base['first'] = Utils::getFirsts($results);
+  	
+  	$lodspk['first'] = Utils::getFirsts($results);
   	chdir($conf['home']);
   	if(is_array($results)){
   	  $resultsObj = Convert::array_to_object($results);
   	}else{
   	  $resultsObj = $results;
   	}
-  	Utils::processDocument($viewFile, $base, $resultsObj);
+  	Utils::processDocument($viewFile, $lodspk, $resultsObj);
   	
   }
   
@@ -95,10 +99,11 @@ class ClassModule extends abstractModule{
   	global $conf;
   	global $results;
   	global $rPointer;
+  	global $lodspk;
   	//Defining default views and models
   	$curieType="";
-  	$modelFile = 'class.rdfs:Resource/'.$extension.'.queries';
-  	$viewFile = 'class.rdfs:Resource/'.$extension.'.template';
+  	$modelFile = 'class.rdfs:Resource/html.queries';
+  	$viewFile = null;//'class.rdfs:Resource/html.template';
   	
   	//Get the first class available
   	$typesAndValues = array();
@@ -117,10 +122,19 @@ class ClassModule extends abstractModule{
   	  	$viewFile = $conf['class']['prefix'].$v.'/'.$extension.'.template';
   	  	$modelFile = $conf['class']['prefix'].$v.'/'.$extension.'.queries';
   	  	break;
-  	  }
+  	  }elseif($extension != 'html' &&
+  	  	file_exists($conf['model']['directory'].$conf['class']['prefix'].$v.'/html.queries')){
+  	  $modelFile = $conf['class']['prefix'].$v.'/html.queries';
+  	  $viewFile = null;//$conf['class']['prefix'].$v.'/html.queries';
+  	  trigger_error("LODSPeaKr can't find the proper query. Using HTML query instead.", E_USER_NOTICE);
+  	  break;
+  	  	}
+  	}
+  	if($viewFile == null && $extension == 'html'){
+  	  $viewFile = 'class.rdfs:Resource/html.template';
   	}
   	return array($modelFile, $viewFile);
   }
-
+  
 }
 ?>
