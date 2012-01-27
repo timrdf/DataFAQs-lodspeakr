@@ -69,8 +69,7 @@ class SpecialFunction extends AbstractSpecialFunction{
   	  	}
   	  	$args["arg".$i]=$params[$i];
   	  }
-  	  
- 	  $results['params'] = $params;
+  	  $results['params'] = $params;
  	  $lodspk = $conf['view']['standard'];
  	  $lodspk['type'] = $modelFile;
  	  $lodspk['root'] = $conf['root'];
@@ -85,6 +84,8 @@ class SpecialFunction extends AbstractSpecialFunction{
   	  $lodspk['type'] = $modelFile;
   	  $lodspk['header'] = $prefixHeader;
   	  $lodspk['args'] = $args;
+  	  $lodspk['module'] = 'service';
+  	  $lodspk['add_mirrored_uris'] = false;
   	  $lodspk['baseUrl'] = $conf['basedir'];
   	  $lodspk['this']['value'] = $uri;
   	  $lodspk['this']['contentType'] = $acceptContentType;

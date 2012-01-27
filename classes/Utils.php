@@ -175,7 +175,8 @@ class Utils{
   
   
   private static function serializeRdf($data, $extension){
-  	global	$conf;
+  	global $conf;
+  	global $lodspk;
   	$ser;
   	$dPointer;
   	$docs = Utils::travelTree($data);
@@ -188,8 +189,7 @@ class Utils{
   	  $t = $parser->getTriples();
   	  $triples = array_merge($triples, $t);
   	}
-
-  	if($conf['mirror_external_uris']){
+  	if($lodspk['add_mirrored_uris']){
   	  global $uri;
   	  global $localUri;
   	  $t = array();
@@ -400,9 +400,10 @@ class Utils{
 	  }
 	  
   	  if($conf['debug']){
+  	  	echo "$modelFile (against ".$e->getSparqlUrl().")\n-------------------------------------------------\n";
   	  	echo $query;
   	  }
-  	  trigger_error("Running query on endpoint", E_USER_NOTICE);
+  	  trigger_error("Running query from ".$modelFile." on endpoint ".$e->getSparqlURL(), E_USER_NOTICE);
   	  $aux = $e->query($query, Utils::getResultsType($query)); 
   	  if($modelFile != $lodspk['type']){
   	  	if(!isset($rPointer[$strippedModelFile])){
