@@ -1,0 +1,18 @@
+PREFIX prov: <http://www.w3.org/ns/prov-o/>
+PREFIX void: <http://rdfs.org/ns/void#>
+
+SELECT distinct ?dataset (count(*) as ?count)
+WHERE {
+  GRAPH ?g  {
+    ?ephemeral a void:Dataset; prov:specializationOf ?dataset .
+  }
+}group by ?dataset
+
+#{%for h in base.header %}
+#PREFIX {{h.prefix}}: <{{h.ns}}>
+#{%endfor%}
+#SELECT DISTINCT ?resource WHERE {
+#  {%if base.args.arg0 %}GRAPH <{{lodspk.args.arg0}}>{ {%endif%}
+#  	[] a ?resource .
+#  {%if base.args.arg0 %} } {%endif%}
+#}
