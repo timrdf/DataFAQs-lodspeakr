@@ -22,7 +22,7 @@ viewHtml=$(cat <<VIEW
     "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" {% for i, ns in base.ns %}xmlns:{{i}}="{{ns}}" 
     {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
-    <head>
+<head>
     <title>Page about {{lodspk.this.value}}</title>
     <link href="{{lodspk.baseUrl}}/lodspeakr/css/basic.css" rel="stylesheet" type="text/css" media="screen" />
     <link rel="alternate" type="application/rdf+xml" title="RDF/XML Version" href="{{lodspk.this.value}}.rdf" />
