@@ -3,17 +3,17 @@
     "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" {% for i, ns in base.ns %}xmlns:{{i}}="{{ns}}" 
     {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
-  <head>
-    <title>My new Service</title>
-    <link href="{{lodspk.baseUrl}}/lodspeakr/css/basic.css" rel="stylesheet" type="text/css" media="screen" />
-  </head>
-  <body>
-    <h1>Epochs in this FAqT Brick</h1>
-    <ul>
-    {% for row in models.main %}
-        <li><a href="{{row.epoch.value}}">{{row.epoch.curie}}</a></li>
-    {% endfor %}
-    </ul>
-   <p>You can use <a href="{{lodspk.baseUrl}}configure-epoch">configure-epoch</a> to configure a new epoch.</p>
-  </body>
+   <head>
+      <title>My new Service</title>
+      <link href="{{lodspk.baseUrl}}/lodspeakr/css/basic.css" rel="stylesheet" type="text/css" media="screen" />
+   </head>
+   <body>
+      <p><a href="{{lodspk.baseUrl}}configure-epoch">Configure</a> a new epoch.</p>
+      <h1>Epochs in this FAqT Brick</h1>
+      <ul>
+      {% for row in models.main %}
+          <li><a href="{{row.epoch.value}}">{{row.epoch.curie}}</a></li>
+      {% endfor %}
+     </ul>
+   </body>
 </html>
