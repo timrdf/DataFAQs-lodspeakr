@@ -1,0 +1,13 @@
+prefix prov:             <http://www.w3.org/ns/prov-o/>
+select distinct ?input
+where {
+   graph ?g {
+   []
+                    # e.g. <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/via-sparql-query>
+      prov:wasAttributedTo <{%for row in models.biordf.DatasetCollection%}{%if forloop.first%}{{row.service.value}}{%endif%}{%endfor%}>;
+                         # {{first.biordf.FAqTServiceCollection.service.value}}; # https://github.com/alangrafu/lodspeakr/issues/11
+      prov:used ?input;
+          # e.g. https://raw.github.com/timrdf/DataFAQs/master/services/sadi/core/select-faqts/via-sparql-query-materials/sample-inputs/from-official-sadi-registry.ttl
+   .
+   }
+}
