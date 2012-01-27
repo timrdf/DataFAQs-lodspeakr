@@ -1,5 +1,15 @@
-SELECT DISTINCT ?g WHERE {
-  GRAPH ?g{
-  	[] ?p ?resource .
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX sd:   <http://www.w3.org/ns/sparql-service-description#>
+
+SELECT DISTINCT ?name ?dump
+WHERE {
+  GRAPH ?name {
+    [] a [] .
+  }
+  OPTIONAL {
+    GRAPH ?g {
+       [] sd:name ?name;
+          sd:graph [ void:dataDump ?dump ] .
+    }
   }
 }
