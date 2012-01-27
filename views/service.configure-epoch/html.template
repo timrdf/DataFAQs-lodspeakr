@@ -1,7 +1,7 @@
 <html> 
    <head>                                                                  
-      <link rel="stylesheet" type="text/css" media="screen" href="configure-epoch.css" />
-      <script type="text/javascript" src="jquery-1.7.1.js"></script>          
+      <link rel="stylesheet" type="text/css" media="screen" href="css/configure-epoch.css" />
+      <script type="text/javascript" src="js/jquery-1.7.1.js"></script>          
       <script type="text/javascript">                                         
 
       function beetlejuice(uri) {
@@ -64,7 +64,7 @@
       <div>
          <center>
             <a href="https://github.com/timrdf/DataFAQs/wiki">
-               <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo"/ width="60%"/>
+               <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo"/ width="40%"/>
             </a>
          </center>
       </div>
@@ -74,6 +74,7 @@
             <span class="step-num">1</span> <span class="step-title">Name the epoch</span>
          </p>
          <span><?php echo date('Y-m-d')?></span>
+         <p>Existing <a href="{{lodspk.baseUrl}}epoch">epochs</a></p>
       </div>
 
       <div id="select-faqts" class="faqts configuration">

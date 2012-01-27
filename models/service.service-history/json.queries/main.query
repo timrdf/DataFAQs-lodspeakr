@@ -1,15 +1,1 @@
-prefix prov:   <http://www.w3.org/ns/prov-o/>
-prefix select-faqts:     <http://sparql.tw.rpi.edu/services/datafaqs/core/select-faqts/>
-prefix select-datasets:  <http://sparql.tw.rpi.edu/services/datafaqs/core/select-datasets/>
-prefix augment-datasets: <http://sparql.tw.rpi.edu/services/datafaqs/core/augment-datasets/>
-
-select distinct ?input
-where {
-   graph ?g {
-   []
-      #prov:wasAttributedTo {{base.args.arg0}};
-      prov:wasAttributedTo <{{lodspk.args.arg0|urldecode}}>;
-      prov:used            ?input;
-   .
-}
-}
+/var/www/datafaqs/DataFAQs-lodspeakr/models/service.service-history/html.queries/main.query

@@ -8,11 +8,12 @@
     <link href="{{lodspk.baseUrl}}/lodspeakr/css/basic.css" rel="stylesheet" type="text/css" media="screen" />
   </head>
   <body>
-    <h1>Classes available</h1>
+    <h1>Epochs in this FAqT Brick</h1>
     <ul>
     {% for row in models.main %}
         <li><a href="{{row.epoch.value}}">{{row.epoch.curie}}</a></li>
     {% endfor %}
     </ul>
+   <p>You can use <a href="{{lodspk.baseUrl}}configure-epoch">configure-epoch</a> to configure a new epoch.</p>
   </body>
 </html>

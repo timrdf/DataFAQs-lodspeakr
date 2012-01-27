@@ -2,9 +2,19 @@ PREFIX void:     <http://rdfs.org/ns/void#>
 PREFIX sd:       <http://www.w3.org/ns/sparql-service-description#>
 PREFIX datafaqs: <http://purl.org/twc/vocab/datafaqs#>
 
-SELECT ?subset
+SELECT ?subset ?triples ?dump
 WHERE {
-  GRAPH ?name {
-     <{{uri}}> void:subset ?subset
-  }
+   GRAPH ?name {
+      <{{uri}}> void:subset ?subset
+   }
+   OPTIONAL {
+      GRAPH ?name2 {
+         ?subset void:triples ?triples
+      }
+   }
+   OPTIONAL {
+      GRAPH ?name3 {
+         ?subset void:dataDump ?dump
+      }
+   }
 }
