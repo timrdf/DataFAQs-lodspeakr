@@ -1,7 +1,7 @@
 <html>
 <body>
    <select>
-   {% for row in r.main %}
+   {% for row in models.main %}
       <option value="{{row.input.value}}">{{row.input.value}}</option>
    {% endfor %}
    </select>
