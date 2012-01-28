@@ -8,7 +8,8 @@
     <link href="{{lodspk.baseUrl}}/lodspeakr/css/basic.css" rel="stylesheet" type="text/css" media="screen" />
   </head>
   <body>
-    <h1>This DataFAQs FAqT Brick has analyzed the following datasets.</h1>
+    <h1>Datasets analyzed in this FAqT Brick</h1>
+    <p><a href="epoch">Epochs</a> analyzed in this FAqT Brick</p>
     <table>
     {% for row in models.main %}
         <tr>
