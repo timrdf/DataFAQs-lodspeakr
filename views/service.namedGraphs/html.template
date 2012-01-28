@@ -5,11 +5,11 @@
     {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
   <head>
     <title>Named Graphs</title>
-    <link href="css/basic.css" rel="stylesheet" type="text/css" media="screen" />
+    <!--link href="css/basic.css" rel="stylesheet" type="text/css" media="screen" /-->
   </head>
   <body>
     <h1>Named graphs available</h1>
-{%include "../header.inc"%}
+%include "../header.inc"%
 	 <table>
       <tr>
         <td>Graph name</td>
@@ -18,7 +18,7 @@
     {% for row in models.main %}
       <tr>
         <td>{{row.name.value}}</td>
-        <td>{%if row.dump%}<a href="{{row.dump.value}}">dump</a>{%endif%}</td>
+        <td>{%if row.dump%}<a href="{{row.dump.mirroredUri}}">dump</a>{%endif%}</td>
       </tr>
     {% endfor %}
     </table>
