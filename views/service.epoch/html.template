@@ -8,7 +8,8 @@
       <link href="{{lodspk.baseUrl}}/lodspeakr/css/basic.css" rel="stylesheet" type="text/css" media="screen" />
    </head>
    <body>
-      <p><a href="{{lodspk.baseUrl}}configure-epoch">Configure</a> a new epoch.</p>
+      <p><a href="configure-epoch">Configure</a> a new epoch.</p>
+      <p><a href="dataset">Datasets</a></p>
       <h1>Epochs in this FAqT Brick</h1>
       <ul>
       {% for row in models.main %}
