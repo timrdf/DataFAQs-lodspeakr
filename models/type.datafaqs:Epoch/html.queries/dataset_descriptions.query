@@ -1,0 +1,23 @@
+prefix foaf:     <http://xmlns.com/foaf/0.1/>
+prefix void:     <http://rdfs.org/ns/void#>
+prefix sd:       <http://www.w3.org/ns/sparql-service-description#>
+prefix prov:     <http://www.w3.org/ns/prov-o/>
+prefix datafaqs: <http://purl.org/twc/vocab/datafaqs#>
+
+select distinct ?gn ?meta ?triples ?ephemeral ?about ?gname ?dump
+where { 
+   graph ?gn {
+
+      <{{uri}}> a datafaqs:Epoch; 
+         void:subset ?meta 
+      .
+      ?meta a void:Graph; 
+         prov:wasAttributedTo [ a datafaqs:DatasetReferencer ];
+         foaf:primaryTopic    ?ephemeral;
+      .
+      ?ephemeral prov:specializationOf ?about .
+      optional {             ?meta  void:triples  ?triples }
+      optional {             ?meta  void:dataDump ?dump    }
+      optional { [] sd:graph ?meta; sd:name       ?gname   }
+   }
+} order by desc(?meta) ?gn ?epoch

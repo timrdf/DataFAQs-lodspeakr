@@ -1,0 +1,24 @@
+prefix foaf:     <http://xmlns.com/foaf/0.1/>
+prefix void:     <http://rdfs.org/ns/void#>
+prefix sd:       <http://www.w3.org/ns/sparql-service-description#>
+prefix prov:     <http://www.w3.org/ns/prov-o/>
+prefix datafaqs: <http://purl.org/twc/vocab/datafaqs#>
+
+select distinct ?autobio ?triples ?service ?about ?gname ?dump
+where { 
+   graph ?gn {
+
+      <{{uri}}> a datafaqs:Epoch; 
+         void:subset ?autobio 
+      .
+      ?autobio a prov:Account; 
+         prov:wasAttributedTo ?service; # The service was 
+         foaf:primaryTopic    ?service  # talking about itself.
+      .
+      ?service a datafaqs:FAqTService; prov:specializationOf ?about .
+
+      optional {             ?autobio  void:dataDump ?dump    }
+      optional {             ?autobio  void:triples  ?triples }
+      optional { [] sd:graph ?autobio; sd:name       ?gname   }
+   }
+}
