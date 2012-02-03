@@ -1,0 +1,30 @@
+PREFIX void:     <http://rdfs.org/ns/void#>
+PREFIX sd:       <http://www.w3.org/ns/sparql-service-description#>
+PREFIX datafaqs: <http://purl.org/twc/vocab/datafaqs#>
+PREFIX prov:     <http://www.w3.org/ns/prov-o/>
+PREFIX dcterms:  <http://purl.org/dc/terms/>
+PREFIX foaf:     <http://xmlns.com/foaf/0.1/>
+
+#SELECT distinct ?dataset ?ephemeral ?triples ?faqt_service ?dump ?g ?name ?abstract ?ng
+SELECT distinct ?dataset ?ephemeral ?triples ?dump 
+WHERE {
+   GRAPH ?g {
+      <{{uri}}> void:subset ?abstract .
+      ?ng
+         a sd:NamedGraph;
+         sd:name  ?name;
+         sd:graph ?abstract
+      .
+      ?abstract
+         a prov:Account, void:Graph, datafaqs:Evaluation;
+         void:triples         ?triples;
+         prov:wasAttributedTo ?faqt_service;
+         foaf:primaryTopic    ?ephemeral;
+         void:dataDump        ?dump
+      .
+      ?ephemeral
+         a void:Dataset;
+         prov:specializationOf ?dataset
+      .
+   }
+}order by ?abstract ?ephemeral

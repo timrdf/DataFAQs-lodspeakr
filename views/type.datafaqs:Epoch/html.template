@@ -14,6 +14,7 @@
       <script type="text/javascript" src="../js/jquery-1.7.1.js"></script>
       <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
       <link href="../css/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css" media="screen" />
+      <link href="../css/configure-epoch.css" rel="stylesheet" type="text/css" media="screen" />
       <script>
       $(function() {
          $( "#tabs" ).tabs();
@@ -23,17 +24,57 @@
     <body about="{{lodspk.this.value}}">
        <p>Other <a href="{{lodspk.baseUrl}}epoch">epochs</a></p>
        <h1>Epoch <a href='{{lodspk.this.value}}'>{{lodspk.this.value}}</a></h1>
-       <div>
+       <div class="configurations">
+
           <table>
              <caption>Configuration graphs (and their sizes)</caption>
-             {% for row in models.subsets %}
+             {% for row in models.configurations %}
              <tr>
-                 <td><a href='{{row.subset.value}}'>{{row.subset.curie}}</a></td>
+                 <td><a href='{{row.config.value}}'>{{row.config.mirroredUri}}</a></td>
+                 <td>{%if row.triples%}{{row.triples.value}}{%endif%}</td>
+                 <td>{%if row.dump%}<a href="{{row.dump.mirroredUri}}">dump</a>{%endif%}</td>
+             </tr>
+             {% endfor %}
+          </table>
+
+       </div>
+
+       <div class="faqts">
+          <table>
+             <caption>FAqT evaluation service self-descriptions (and their sizes)</caption>
+             {% for row in models.faqt_service_self_descriptions %}
+             <tr>
+                 <td><a href='{{row.service.value}}'>{{row.about.mirroredUri}}</a></td>
+                 <td>{%if row.triples%}{{row.triples.value}}{%endif%}</td>
+                 <td>{%if row.dump%}<a href="{{row.dump.mirroredUri}}">dump</a>{%endif%}</td>
+             </tr>
+             {% endfor %}
+          </table>
+       </div>
+
+       <div class="datasets">
+          <table>
+             <caption>Dataset descriptions (and their sizes)</caption>
+             {% for row in models.dataset_descriptions %}
+             <tr>
+                 <td><a href='{{row.ephemeral.value}}'>{{row.about.mirroredUri}}</a></td>
+                 <td>{%if row.triples%}{{row.triples.value}}{%endif%}</td>
+                 <td>{%if row.dump%}<a href="{{row.dump.mirroredUri}}">dump</a>{%endif%}</td>
+             </tr>
+             {% endfor %}
+          </table>
+       </div>
+
+          <table>
+             <caption>Evaluation graphs (and their sizes)</caption>
+             {% for row in models.evaluations %}
+             <tr>
+                 <td><a href='{{row.ephemeral.value}}'>{{row.dataset.curie}}</a></td>
                  <td>{{row.triples.value}}</td>
                  <td>{%if row.dump%}<a href="{{row.dump.mirroredUri}}">dump</a>{%endif%}</td>
-            </tr>
+             </tr>
              {% endfor %}
-             </table>
+          </table>
        </div>
 
       <!--div id="tabs">

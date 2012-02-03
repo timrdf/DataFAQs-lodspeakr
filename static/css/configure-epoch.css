@@ -108,11 +108,11 @@ div.configuration {
    padding-left: 10px;
 }
 
-div.faqts th {
+div.faqts th, caption {
 	background-color: #D6DBFD;
 }
 
-div.datasets th {
+div.datasets th, caption {
 	background-color: #FEFDB5;
 }
 

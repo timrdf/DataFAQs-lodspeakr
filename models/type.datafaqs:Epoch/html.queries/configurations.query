@@ -1,0 +1,21 @@
+prefix dcterms:  <http://purl.org/dc/terms/>
+prefix void:     <http://rdfs.org/ns/void#>
+prefix sd:       <http://www.w3.org/ns/sparql-service-description#>
+prefix datafaqs: <http://purl.org/twc/vocab/datafaqs#>
+
+select distinct ?config ?triples ?gname ?dump
+where { 
+   graph ?gn {
+
+      <{{uri}}> a datafaqs:Epoch; 
+         void:subset ?config
+         # TODO dcterms:date ?date
+      .
+      ?config a datafaqs:EpochConfigurationGraph .
+
+      optional {             ?config  void:triples  ?triples }
+      optional {             ?config  void:dataDump ?dump    }
+      optional { [] sd:graph ?config; sd:name       ?gname   }
+
+   }
+} order by desc(?config) ?gn ?epoch
