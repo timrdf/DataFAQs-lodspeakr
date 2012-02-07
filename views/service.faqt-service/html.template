@@ -5,37 +5,34 @@
     {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
    <head>
       <!--title>My new Service</title-->
-      <!--link href="{{lodspk.baseUrl}}/lodspeakr/css/basic.css" rel="stylesheet" type="text/css" media="screen" /-->
+      <!--link href="{{lodspk.baseUrl}}css/basic.css" rel="stylesheet" type="text/css" media="screen" /-->
       <link href="css/configure-epoch.css" rel="stylesheet" type="text/css" media="screen" />
    </head>
    <body>
-      <center about="#" typeof="datafaqs:FAqTBrickExplorer">
-          <a rel="rdfs:seeAlso" href="https://github.com/timrdf/DataFAQs/wiki">
+      <center>
+          <a href="https://github.com/timrdf/DataFAQs/wiki">
              <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo"/ width="40%"/>
           </a>
           <p>
             <a href="{{lodspk.baseUrl}}">home</a>
-            | <a href="faqt-service">evaluation services</a>
-            | datasets
+            | evaluation services
+            | <a href="dataset">datasets</a>
             | <a href="epoch">epochs</a>
           </p>
-
-         <h1>Datasets analyzed in this FAqT Brick</h1>
-         <table>
-            {% for row in models.main %}
-                <tr>
-                    <td><a href="{{row.dataset.value}}">{{row.dataset.value}}</td>
-                    <td><a href="http://example.org/url-to-local-hashed-uri-of-ckan-dataset-uri">{{row.count.value}}</a></td>
-                 </tr>
-            {% endfor %}
-         </table>
+         <p>todo</p>
          <div class="powered-by">
          <a rel="datafaqs:powered_by" href="http://www.w3.org/TR/rdfa-syntax"><img src="image/sw-rdfa-orange.png" alt="Powered by RDFa" width="120px"/></a>
          <a rel="datafaqs:powered_by" href="http://test.ckan.net/"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/ckan/ckan_logo_box.png" alt="Powered by CKAN" width="80px"/></a>
          <a rel="datafaqs:powered_by" href="http://sadiframework.org/content/"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/sadi/sadi-header.png" alt="Powered by SADI" width="150px"/></a>
          <a rel="datafaqs:powered_by" href="http://lodspeakr.org"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/lodspeakr/lodspeakr_4.png" alt="Powered by LODSPeaKr" width="100px"/></a>
          <a rel="datafaqs:powered_by" href="http://code.google.com/p/surfrdf/"><img src="http://surfrdf.googlecode.com/files/surf-logo-poweredby.png" alt="Powered by SuRF" width="150px"/></a>
-         <div>
+         <p>
+            <a rel="doap:developer" xmlns:foaf="http://xmlns.com/foaf/0.1/" href="http://tw.rpi.edu/instances/TimLebo">
+               <span property="foaf:name" class="deemphasize">Tim Lebo</span>
+            </a>
+         </p>
+         </div>
       </center>
-  </body>
+     </ul>
+   </body>
 </html>

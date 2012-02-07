@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
-    "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"
+      xmlns:doap="http://usefulinc.com/ns/doap#"
+      xmlns:datafaqs="http://purl.org/twc/vocab/datafaqs#"
     version="XHTML+RDFa 1.0" xml:lang="en">
-  <head>
-    <title>Main</title>
-    <link href="css/basic.css" rel="stylesheet" type="text/css" media="screen" />
-  </head>
-  <body>
-    <h1>Services available</h1>
-	<ul>
-        <li><a href='classes'>List of classes in the triple store</a></li>
-        <li><a href='namedGraphs'>Named graphs in the triple store</a></li>
-    </ul>
-  </body>
+   <head>
+      <title>Reference FAqTBrickExplorer</title>
+      <!--link href="css/basic.css" rel="stylesheet" type="text/css" media="screen" /-->
+      <link href="css/configure-epoch.css" rel="stylesheet" type="text/css" media="screen" />
+   </head>
+   <body about="#" typeof="datafaqs:FAqTBrickExplorer">
+      <center>
+          <a href="https://github.com/timrdf/DataFAQs/wiki">
+             <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo"/ width="40%"/>
+          </a>
+          <p>
+            home
+            | <a href="faqt-service">evaluation services</a>
+            | <a href="dataset">datasets</a>
+            | <a href="epoch">epochs</a>
+          </p>
+         <div class="powered-by">
+            <a rel="datafaqs:powered_by" href="http://www.w3.org/TR/rdfa-syntax">
+               <img src="image/sw-rdfa-orange.png" alt="Powered by RDFa" width="120px"/></a>
+            <a rel="datafaqs:powered_by" href="http://test.ckan.net/">
+               <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/ckan/ckan_logo_box.png" alt="Powered by CKAN" width="80px"/></a>
+            <a rel="datafaqs:powered_by" href="http://sadiframework.org/content/">
+               <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/sadi/sadi-header.png" alt="Powered by SADI" width="150px"/></a>
+            <a rel="datafaqs:powered_by" href="http://lodspeakr.org">
+               <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/lodspeakr/lodspeakr_4.png" alt="Powered by LODSPeaKr" width="100px"/></a>
+            <a rel="datafaqs:powered_by" href="http://code.google.com/p/surfrdf/">
+               <img src="http://surfrdf.googlecode.com/files/surf-logo-poweredby.png" alt="Powered by SuRF" width="150px"/></a>
+            <p>
+               <a rel="doap:developer" xmlns:foaf="http://xmlns.com/foaf/0.1/" href="http://tw.rpi.edu/instances/TimLebo">
+                  <span property="foaf:name" class="deemphasize">Tim Lebo</span></a>
+            </p>
+         </div>
+      </center>
+    	<!--ul>
+        <!-li><a href='classes'>List of classes in the triple store</a></li>
+        <li><a href='namedGraphs'>Named graphs in the triple store</a></li->
+      </ul-->
+   </body>
 </html>
-
-

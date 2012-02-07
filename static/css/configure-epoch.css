@@ -36,10 +36,13 @@ ul, ol, dl, li, dt, dd {
 /* Links
 ------------------------------*/
 
-a, a:link {}
+a, a:link {
+   color: gray;
+   text-decoration: none;
+}
 a:visited {}
 a:hover {}
-a:active {}
+a:active {}*/
 
 /* Forms
 ------------------------------*/
@@ -84,6 +87,15 @@ h3 { margin: 5px 0; }
 	border: 1px solid black;
 	margin: 5px;
 	padding: 5px;
+}
+
+div.powered-by {
+   margin: 15px;
+   padding: 15px;
+}
+
+div.warning p {
+   color: red;
 }
 
 table {

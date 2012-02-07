@@ -1,5 +1,7 @@
 <html> 
-   <head>                                                                  
+   <head xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:datafaqs="http://purl.org/twc/vocab/datafaqs#">                                                                  
       <link rel="stylesheet" type="text/css" media="screen" href="css/configure-epoch.css" />
       <script type="text/javascript" src="js/jquery-1.7.1.js"></script>          
       <script type="text/javascript">                                         
@@ -61,11 +63,24 @@
    </head>                                                              
    <body xmlns:datafaqs="http://purl.org/twc/vocab/datafaqs#"
          xmlns:prov="http://www.w3.org/ns/prov-o/">
+
       <div>
          <center>
             <a href="https://github.com/timrdf/DataFAQs/wiki">
                <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo"/ width="40%"/>
             </a>
+            <p>
+              <a href="{{lodspk.baseUrl}}">home</a>
+              | <a href="faqt-service">evaluation services</a>
+              | <a href="dataset">datasets</a>
+              | <a href="epoch">epochs</a>
+            </p>
+         </center>
+      </div>
+
+      <div class="warning">
+         <center>
+            <p>Note: This page is for illustration purposes only. It is not functional yet.</p>
          </center>
       </div>
 
@@ -97,7 +112,7 @@
          </table>
          <select class="core-service">
             {%for i in models.biordf.FAqTServiceCollection%}
-               <option value='{{i.service.value}}'>{{i.service.value}}</option>
+               <option about='{{i.service.value}}' typeof="datafaqs:FAqTSelector" value='{{i.service.value}}'>{{i.service.value}}</option>
             {%endfor%}
          </select>
          with input: (new) <input type="text" name="lname" /> or previous:
@@ -126,7 +141,7 @@
          </table>
          <select class="core-service">
             {%for i in models.biordf.DatasetCollection%}
-               <option value='{{i.service.value}}'>{{i.service.value}}</option>
+               <option about='{{i.service.value}}' typeof="datafaqs:DatasetSelector" value='{{i.service.value}}'>{{i.service.value}}</option>
             {%endfor%}
          </select>
          with input: (new) <input type="text" name="lname" /> or previous: 
@@ -173,11 +188,12 @@
 
       </div> <!-- select-datasets -->
 
-      <center>
-         <a href="http://test.ckan.net/"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/ckan/ckan_logo_box.png" alt="Powered by CKAN" width="80px"/></a>
-         <a href="http://sadiframework.org/content/"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/sadi/sadi-header.png" alt="Powered by SADI" width="150px"/></a>
-         <a href="http://code.google.com/p/surfrdf/"><img src="http://surfrdf.googlecode.com/files/surf-logo-poweredby.png" alt="Powered by SuRF" width="150px"/></a>
-         <a href="http://lodspeakr.org"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/lodspeakr/lodspeakr_4.png" alt="Powered by LODSPeaKr" width="100px"/></a>
+      <center about="#" typeof="datafaqs:FAqTBrickExplorer">
+         <a rel="datafaqs:powered_by" href="http://www.w3.org/TR/rdfa-syntax"><img src="image/sw-rdfa-orange.png" alt="Powered by RDFa" width="120px"/></a>
+         <a rel="datafaqs:powered_by" href="http://test.ckan.net/"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/ckan/ckan_logo_box.png" alt="Powered by CKAN" width="80px"/></a>
+         <a rel="datafaqs:powered_by" href="http://sadiframework.org/content/"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/sadi/sadi-header.png" alt="Powered by SADI" width="150px"/></a>
+         <a rel="datafaqs:powered_by" href="http://lodspeakr.org"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/lodspeakr/lodspeakr_4.png" alt="Powered by LODSPeaKr" width="100px"/></a>
+         <a rel="datafaqs:powered_by" href="http://code.google.com/p/surfrdf/"><img src="http://surfrdf.googlecode.com/files/surf-logo-poweredby.png" alt="Powered by SuRF" width="150px"/></a>
       </center>
    </body>                                                              
 </html>
