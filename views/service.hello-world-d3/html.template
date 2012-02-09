@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
+    "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" {% for i, ns in base.ns %}xmlns:{{i}}="{{ns}}" 
+    {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
+  <head>
+    <title>Hello from d3.js</title>
+    <script type="text/javascript" src="js/d3.js"></script>
+    <script type="text/javascript" src="js/sparql.js"></script>
+    <link href="css/hello-world-d3.css" rel="stylesheet" type="text/css" media="screen" />
+  </head>
+
+  <body>
+     <h1>Graph type counts</h1>
+     <div id="doit" class="chart"/>
+
+     <script>
+        query='select distinct ?g (count(?type) as ?count) where { graph ?g {[] a ?type}} group by ?g order by ?g'
+
+        sparqlSelect(query,'http://aquarius.tw.rpi.edu:8993/sparql',function (json) {
+
+        var x = d3.scale.linear()
+             .domain([0, d3.max(json.results.bindings.map(function(d){return parseInt(d.count.value)}))])
+             .range(["0px", "420px"]);
+
+        var chart = d3.select("#doit").append("svg")
+             .attr("class", "chart")
+             .attr("width", 420)
+             .attr("height", 20 * json.results.bindings.length);
+
+        chart.selectAll("rect")
+             .data(json.results.bindings)
+             .enter().append("rect")
+             .attr("y", function(d, i) { return i * 20; })
+             .attr("width", function(d){ return x(parseInt(d.count.value)) })
+             .attr("height", 20);
+        })
+      </script>
+   <ul>
+      {% for row in models.main %}
+          <li><a href="{{ row.g.value }}">{{row.g.curie}}</a> {{row.count.value}}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

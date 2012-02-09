@@ -1,0 +1,4 @@
+{% for row in models.main %}
+ "graph" : "{{row.g.value}}"
+ "count" : {{row.count.value}}
+{% endfor %}
