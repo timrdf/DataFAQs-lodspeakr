@@ -5,8 +5,8 @@
     {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
    <head>
       <!--title>My new Service</title-->
-      <link href="{{lodspk.baseUrl}}css/basic.css" rel="stylesheet" type="text/css" media="screen" />
-      <script type="application/javascript">
+      <link href="css/configure-epoch.css" rel="stylesheet" type="text/css" media="screen" />
+      <script type="text/javascript">
          namecloud = [
             {% for row in models.names %}
             {
@@ -18,7 +18,16 @@
       </script>
    </head>
    <body>
-      <center> 
+      <center about="#" typeof="datafaqs:FAqTBrickExplorer">
+         <a rel="rdfs:seeAlso" href="https://github.com/timrdf/DataFAQs/wiki">
+            <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo"/ width="40%"/>
+         </a>
+         <p>
+           home
+           | <a href="faqt-service">evaluation services</a>
+           | <a href="datasets">datasets</a>
+           | <a href="epoch">epochs</a>
+         </p>
          <ul>
          {% for row in models.names %}
              <li>{{row.name.value}} {{row.count.value}}</li>
