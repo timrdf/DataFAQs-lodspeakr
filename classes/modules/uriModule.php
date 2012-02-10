@@ -30,7 +30,7 @@ class UriModule extends abstractModule{
   	}
   	$extension = Utils::getExtension($pair[2]); 
   	$curie = Utils::uri2curie($pair[0]);
-  	list($modelFile, $viewFile) = $this::getModelandView($curie, $extension);
+  	list($modelFile, $viewFile) = $this->getModelandView($curie, $extension);
   	
   	if($modelFile == NULL){
   	  return FALSE;
@@ -69,7 +69,7 @@ class UriModule extends abstractModule{
   	$acceptContentType = $format;
 
   	$curie = Utils::uri2curie($uri);
-  	list($modelFile, $viewFile) = $this::getModelandView($curie, $extension);
+  	list($modelFile, $viewFile) = $this->getModelandView($curie, $extension);
   	if($modelFile == NULL){
   	  return;
   	}
@@ -80,12 +80,12 @@ class UriModule extends abstractModule{
   	$lodspk['add_mirrored_uris'] = true;
   	$lodspk['this']['value'] = $uri;
   	$lodspk['this']['curie'] = Utils::uri2curie($uri);
-  	$lodspk['thislocal']['value'] = $localUri;
-  	$lodspk['thislocal']['curie'] = Utils::uri2curie($localUri);
+  	$lodspk['local']['value'] = $localUri;
+  	$lodspk['local']['curie'] = Utils::uri2curie($localUri);
   	
   	$lodspk['this']['contentType'] = $acceptContentType;
-  	$lodspk['model']['directory'] = $conf['model']['directory'];
-  	$lodspk['view']['directory'] = $conf['view']['directory'];
+  	$lodspk['model'] = $conf['model']['directory'];
+  	$lodspk['view'] = $conf['view']['directory'];
   	$lodspk['ns'] = $conf['ns'];
   	
   	
