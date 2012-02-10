@@ -8,11 +8,17 @@ WHERE {
   }
 }group by ?dataset
 
-#{%for h in base.header %}
-#PREFIX {{h.prefix}}: <{{h.ns}}>
-#{%endfor%}
-#SELECT DISTINCT ?resource WHERE {
-#  {%if base.args.arg0 %}GRAPH <{{lodspk.args.arg0}}>{ {%endif%}
-#  	[] a ?resource .
-#  {%if base.args.arg0 %} } {%endif%}
-#}
+#prefix dcat: <http://www.w3.org/ns/dcat#>
+#prefix prov: <http://www.w3.org/ns/prov-o/>
+#prefix void: <http://rdfs.org/ns/void#>
+#
+#select distinct ?local ?dataset (count(?dataset) as ?count)
+#where {
+#  graph ?g {
+#    ?ephemeral 
+#       a void:Dataset; 
+#       prov:specializationOf ?dataset
+#    .
+#    ?local prov:alternateOf ?dataset .
+#  }
+#} group by ?dataset ?local
