@@ -9,7 +9,7 @@
   </head>
   <body>
     <h1>Named graphs available</h1>
-%include "../header.inc"%
+include "../header.inc"
 	 <table>
       <tr>
         <td>Graph name</td>
