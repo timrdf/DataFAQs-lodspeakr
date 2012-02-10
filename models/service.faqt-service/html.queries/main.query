@@ -1,8 +1,14 @@
-{%for h in base.header %}
-PREFIX {{h.prefix}}: <{{h.ns}}>
-{%endfor%}
-SELECT DISTINCT ?resource WHERE {
-  {%if base.args.arg0 %}GRAPH <{{lodspk.args.arg0}}>{ {%endif%}
-  	[] a ?resource .
-  {%if base.args.arg0 %} } {%endif%}
-}
+prefix dcterms:    <http://purl.org/dc/terms/>
+prefix void:       <http://rdfs.org/ns/void#>
+prefix sd:         <http://www.w3.org/ns/sparql-service-description#>
+prefix prov:       <http://www.w3.org/ns/prov-o/>
+prefix datafaqs:   <http://purl.org/twc/vocab/datafaqs#>
+
+select distinct ?local ?service (count(distinct ?ephemeral) as ?count)
+where {
+  graph ?gn {
+    ?ephemeral prov:specializationOf ?service .
+                                     ?service a datafaqs:FAqTService .
+    ?local     prov:alternateOf      ?service .
+  }
+} group by ?service ?local
