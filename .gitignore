@@ -3,3 +3,9 @@ settings.inc.php
 cache/*
 meta/*
 meta/db.sqlite
+models/rdfs:Resource.model.json
+models/rdfs:Resource.model.nt
+models/rdfs:Resource.model.ttl
+views/rdfs:Resource.view.json
+views/rdfs:Resource.view.nt
+views/rdfs:Resource.view.ttl
