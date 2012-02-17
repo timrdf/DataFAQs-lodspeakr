@@ -2,8 +2,8 @@
    <head xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
          xmlns:datafaqs="http://purl.org/twc/vocab/datafaqs#">                                                                  
-      <link rel="stylesheet" type="text/css" media="screen" href="css/configure-epoch.css" />
-      <script type="text/javascript" src="js/jquery-1.7.1.js"></script>          
+      <link rel="stylesheet" type="text/css" media="screen" href="../css/configure-epoch.css" />
+      <script type="text/javascript" src="../js/jquery-1.7.1.js"></script>          
       <script type="text/javascript">                                         
 
       function beetlejuice(uri) {
@@ -26,7 +26,7 @@
             // Hack https://github.com/alangrafu/lodspeakr/issues/35
             service = encodeURIComponent(encodeURIComponent(encodeURIComponent(service)));
 
-            //$(e.currentTarget).after('<p>http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/service-history/'+service+'</p>');
+            //$(e.currentTarget).after('<p>{{lodspk.baseUrl}}/service-history/'+service+'</p>');
 
             // http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/service-history/select-faqts:via-sparql-query
             // http%25253A%25252F%25252Fsparql.tw.rpi.edu%25252Fservices%25252Fdatafaqs%25252Fcore%25252Fselect-faqts%25252Fvia-sparql-query
@@ -42,7 +42,6 @@
             // http://sparql.tw.rpi.edu/datafaqs/epoch/2012-01-21/config/datasets
 
             $.ajax({
-               url     : 'http://aquarius.tw.rpi.edu/datafaqs/DataFAQs-lodspeakr/service-history/'+service, // TODO: replace with base.home
                url     : '{{lodspk.baseUrl}}service-history/'+service,
                headers : { "Accept" : "application/json" },
                context : $(e.currentTarget).siblings('select.core.input')[0], // Becomes 'this' in success function.
