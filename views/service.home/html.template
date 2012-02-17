@@ -12,7 +12,7 @@
             {
                 "name"  : "{{row.name.value}}",
                 "count" : {{row.count.value}}
-            }{%if forloop.last%},{%endif%}
+            }{%if forloop.last%}{%else%},{%endif%}
             {% endfor %}
          ]
       </script>
