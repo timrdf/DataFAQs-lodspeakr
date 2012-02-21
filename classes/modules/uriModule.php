@@ -11,6 +11,9 @@ class UriModule extends abstractModule{
   	global $endpoints;
   	global $lodspk;
   	
+  	if($conf['disableComponents'] == true){
+  	  return FALSE;
+  	}
   	require_once('classes/MetaDb.php');
   	$metaDb = new MetaDb($conf['metadata']['db']['location']);
   	
@@ -52,7 +55,7 @@ class UriModule extends abstractModule{
   	global $endpoints;
   	global $lodspk;
   	global $results;
-  	global $first;
+  	global $firstResults;
   	$res = $p['res'];
   	$page = $p['page'];
   	$format = $p['format'];
@@ -67,7 +70,7 @@ class UriModule extends abstractModule{
   	}
   	
   	$uri = $res;
-  	if($conf['mirror_external_uris']){
+  	if($conf['mirror_external_uris'] != false){
   	  $localUri = preg_replace("|^".$conf['ns']['local']."|", $conf['basedir'], $res);
   	}
   	
@@ -100,10 +103,10 @@ class UriModule extends abstractModule{
   	
   	
   	chdir($conf['home'].$conf['model']['directory']);
-  	Utils::queryFile($modelFile, $endpoints['local'], $results, $first);
+  	Utils::queryFile($modelFile, $endpoints['local'], $results, $firstResults);
   	if(!$lodspk['resultRdf']){
   	  $results = Utils::internalize($results); 
-  	  $lodspk['first'] = Utils::getFirsts($results);
+  	  $lodspk['firstResults'] = Utils::getfirstResultss($results);
   	  
   	  chdir($conf['home']);
   	  if(is_array($results)){

@@ -45,7 +45,7 @@ class ServiceModule extends abstractModule{
   	global $acceptContentType;
   	global $endpoints;
   	global $lodspk;
-  	global $first;
+  	global $firstResults;
   	$context = array();
   	$context['contentType'] = $acceptContentType;
   	$context['endpoints'] = $endpoints;
@@ -64,7 +64,7 @@ class ServiceModule extends abstractModule{
   	  $prefixHeader = array();
   	  
   	  for($i=0;$i<sizeof($params);$i++){
-  	  	if($conf['mirror_external_uris']){
+  	  	if($conf['mirror_external_uris'] != false){
   	  	  $altUri = Utils::curie2uri($params[$i]);
   	  	  $altUri = preg_replace("|^".$conf['basedir']."|", $conf['ns']['local'], $altUri);
   	  	  $params[$i] = Utils::uri2curie($altUri);
@@ -73,6 +73,8 @@ class ServiceModule extends abstractModule{
   	  
   	  $segmentConnector = "";
   	  for($i=0;$i<sizeof($params);$i++){  
+  	  	Utils::curie2uri($params[$i]);
+  	  	//echo $params[$i]." ".Utils::curie2uri($params[$i]);exit(0);
   	  	$auxPrefix = Utils::getPrefix($params[$i]);
   	  	if($auxPrefix['ns'] != NULL){
   	  	  $prefixHeader[] = $auxPrefix;
@@ -109,10 +111,10 @@ class ServiceModule extends abstractModule{
   	  }
   	  chdir($lodspk['model']);
   	  
-  	  Utils::queryFile($modelFile, $endpoints['local'], $results, $first);
+  	  Utils::queryFile($modelFile, $endpoints['local'], $results, $firstResults);
       if(!$lodspk['resultRdf']){
       	$results = Utils::internalize($results); 
-      	$lodspk['first'] = Utils::getFirsts($results);
+      	$lodspk['firstResults'] = Utils::getfirstResultss($results);
       	
       	chdir($conf['home']);
       	if(is_array($results)){

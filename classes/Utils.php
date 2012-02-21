@@ -35,11 +35,23 @@ class Utils{
   	global $conf;
   	$ns = $conf['ns'];
   	$curie = $uri;
+  	
+  	$aux = $uri;
   	foreach($ns as $k => $v){
-  	  $curie = preg_replace("|^$v|", "$k:", $uri);
-  	  if($curie != $uri){
+  	  $aux = preg_replace("|^$v|", "", $uri);
+  	  if($aux != $uri){
+  	  	$uriSegments = explode("/", $aux);
+  	  	$lastSegment = array_pop($uriSegments);
+  	  	if(sizeof($uriSegments)>0){
+  	  	  $prefix = $k."_".(implode("_", $uriSegments));
+  	  	  //Adding "new" namespace
+  	  	  $conf['ns'][$prefix] = $v.implode("/", $uriSegments)."/";
+  	  	}else{
+  	  	  $prefix = $k;
+  	  	}
+  	  	$curie = $prefix.":".$lastSegment;
   	  	break;
-  	  }
+  	  }  
   	}
   	return $curie;
   }
@@ -52,8 +64,15 @@ class Utils{
   	if(preg_match('|^//|', $parts[1])){
   	  return $curie;
   	}  	
-  	if(sizeof($parts)>1 && isset($ns[$parts[0]])){
-  	  return $ns[$parts[0]].$parts[1];
+  	if(sizeof($parts)>1 ){
+  	  if(!isset($ns[$parts[0]])){
+  		$prefixSegments = explode("_", $parts[0]);
+  		$realPrefix = array_shift($prefixSegments);
+  		$conf['ns'][$parts[0]] = $ns[$realPrefix].join("/", $prefixSegments);
+  		return $ns[$realPrefix].join("/", $prefixSegments)."/".$parts[1];
+  	  }else{
+  	  	return $ns[$parts[0]].$parts[1];
+  	  }
   	}else{
   	  return $curie;
   	}
@@ -67,7 +86,7 @@ class Utils{
   	if(preg_match('|^//|', $parts[1])){
   	  return $curie;
   	}  	
-  	return array('ns' => $ns[$parts[0]], 'prefix' => $parts[0]);;
+  	return array('ns' => $ns[$parts[0]], 'prefix' => $parts[0]);
   }
   
   public static function getTemplate($uri){
@@ -283,7 +302,7 @@ class Utils{
   	  	  	  $r[$modelDir] = array();
   	  	  	  $f[$modelDir] = array();
   	  	  	}
-  	  	  	Utils::queryFile($modelFile, $e, $r[$modelDir], $f[$modelDir]);
+  	  	  	Utils::queryFile($modelFile, $e, $r[$modelDir], $f);
   	  	  }else{
   	  	  	Utils::queryFile($modelFile, $e, $r, $f);
   	  	  }
@@ -298,9 +317,9 @@ class Utils{
   	  	  $r[$modelDir] = array();
   	  	}
   	  	if($modelDir != $lodspk['type']){
-  	  	  Utils::queryDir($v, $r[$modelDir]);
+  	  	  Utils::queryDir($v, $r[$modelDir], $f[$modelDir]);
   	  	}else{
-  	  	  Utils::queryDir($v, $r);
+  	  	  Utils::queryDir($v, $r, $f);
   	  	}
   	  }  	
   	}
@@ -313,8 +332,8 @@ class Utils{
   	global $conf;
   	global $lodspk;
   	global $results;
-  	global $first;
-  	$uri = $lodspk['this']['value'];
+  	global $firstResults;
+	$uri = $lodspk['this']['value'];
   	$data = array();
   	$strippedModelFile = str_replace('.query', '',$modelFile); 	  
  	if(!is_dir($modelFile)){
@@ -331,8 +350,9 @@ class Utils{
   	  }
   	  $r2 = Convert::array_copy($results);
   	  $models = Convert::array_to_object($r2);
-  	  $f = Convert::array_to_object($first);
- 	  $vars = compact('uri', 'lodspk', 'models', 'f');
+  	  $f2 = Convert::array_copy($firstResults);
+  	  $first = Convert::array_to_object($f2);
+ 	  $vars = compact('uri', 'lodspk', 'models', 'first');
  	  $q = file_get_contents($modelFile);
  	  if($q == false){
  	  	Utils::send500("I can't load ".$modelFile." in ".getcwd());
@@ -419,13 +439,13 @@ class Utils{
   	  if($modelFile != $lodspk['type']){
   	  	if(!isset($rPointer[$strippedModelFile])){
   	  	  $rPointer[$strippedModelFile] = array();
-  	  	  $first[$strippedModelFile] = array();
+  	  	  $firstResults[$strippedModelFile] = array();
   	  	}
   	  	if(Utils::getResultsType($query) == $conf['output']['select']){
   	  	  $rPointer[$strippedModelFile] = Utils::sparqlResult2Obj($aux);
   	  	  $fPointer[$strippedModelFile] = $rPointer[$strippedModelFile][0];
   	  	  /*if(sizeof($rPointer)>0){
-  	  	  $rPointer[$modelFile]['first'] = $rPointer[$modelFile][0];
+  	  	  $rPointer[$modelFile]['firstResults'] = $rPointer[$modelFile][0];
   	  	  }*/
   	  	}else{
   	  	  $lodspk['resultRdf'] = true;
@@ -436,7 +456,7 @@ class Utils{
   	  	  $rPointer = Utils::sparqlResult2Obj($aux);
   	  	  $fPointer[$strippedModelFile] = $rPointer[0];
   	  	  /*if(sizeof($rPointer)>0){
-  	  	  $rPointer['first'] = $rPointer[0];
+  	  	  $rPointer['firstResults'] = $rPointer[0];
   	  	  }*/
   	  	}else{
   	  	  $lodspk['resultRdf'] = true;
@@ -458,20 +478,28 @@ class Utils{
   
   public static function internalize($array){
   	global $conf;
-  	$firstKeyAppearance = true;
+  	$firstResultsKeyAppearance = true;
   	foreach($array as $key => $value){
   	  if(!isset($value['value'])){
   	  	$array[$key] = Utils::internalize($value);
-  	  	/*if($firstKeyAppearance){
-  	  	$firstKeyAppearance = false;
-  	  	$array['_first']=$array[$key];
+  	  	/*if($firstResultsKeyAppearance){
+  	  	$firstResultsKeyAppearance = false;
+  	  	$array['_firstResults']=$array[$key];
   	  	}*/
   	  }else{
   	  	if(isset($value['uri']) && $value['uri'] == 1){
-  	  	  if($conf['mirror_external_uris']){
+  	  	  if(isset($conf['mirror_external_uris']) && $conf['mirror_external_uris'] != false){
   	  	  	$value['mirroredUri'] = $value['value'];
+  	  	  	
+  	  	  	if(is_bool($conf['mirror_external_uris'])){
+  	  	  	  $value['value'] = preg_replace("|^".$conf['ns']['local']."|", $conf['basedir'], $value['value']);
+  	  	  	}elseif(is_string($conf['mirror_external_uris'])){
+  	  	  	  $value['value'] = preg_replace("|^".$conf['mirror_external_uris']."|", $conf['basedir'], $value['value']);
+  	  	  	}else{
+  	  	  	  Utils::send500("Error in mirroring configuration");
+  	  	  	  exit(1);
+  	  	  	}
   	  	  }
-  	  	  $value['value'] = preg_replace("|^".$conf['ns']['local']."|", $conf['basedir'], $value['value']);
   	  	  $value['curie'] = Utils::uri2curie($value['value']);
   	  	  $array[$key] = $value;
   	  	}  	  	  	  	
@@ -480,12 +508,12 @@ class Utils{
   	return $array;
   }
   
-  public static function getFirsts($array){
+  public static function getfirstResultss($array){
   	global $conf;
-  	$firstKeyAppearance = true;
+  	$firstResultsKeyAppearance = true;
   	foreach($array as $key => $value){
   	  if(!isset($value['value'])){
-  	  	$aux = Utils::getFirsts($value);
+  	  	$aux = Utils::getfirstResultss($value);
   	  	if(isset($aux['0'])){
   	  	  $array[$key] = $aux['0'];
   	  	}else{
@@ -512,8 +540,8 @@ class Utils{
   	  'cache_dir' => $conf['home'].'cache/',
   	  ));
   	$models = $data;
-  	$first = $lodspk['first'];
-  	unset($lodspk['first']);
+  	$first = $lodspk['firstResults'];
+  	unset($lodspk['firstResults']);
   	$lodspk = $lodspk;
   	//unset($lodspk);
   	$vars = compact('uri','lodspk', 'models', 'first');
