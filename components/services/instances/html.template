@@ -9,7 +9,7 @@
   </head>
   <body>
     <h1>Instances of class {{lodspk.args.arg0}}</h1>
-{%include "../header.inc"%}
+{%include "../../includes/header.inc"%}
 	<ul>
     {% for row in models.main %}
         <li><a href="{{ row.resource.value }}">{{row.resource.curie}}</a></li>

@@ -9,12 +9,8 @@
   </head>
   <body>
     <h1>Named graphs available</h1>
-include "../header.inc"
-	 <table>
-      <tr>
-        <td>Graph name</td>
-        <td>Dump file</td>
-      </tr>
+{%include "../../includes/header.inc"%}
+	<table>
     {% for row in models.main %}
       <tr>
         <td>{{row.name.value}}</td>
