@@ -13,3 +13,4 @@ WHERE {
     }
   }
 }
+ order by ?g
