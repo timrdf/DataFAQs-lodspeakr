@@ -11,6 +11,8 @@
                <img src="http://lodspeakr.org/img/lodspeakr_small.png" alt="Powered by LODSPeaKr" width="100px"/></a>
             <p>
                <a rel="doap:developer" xmlns:foaf="http://xmlns.com/foaf/0.1/" href="http://tw.rpi.edu/instances/TimLebo">
-                  <span property="foaf:name" class="deemphasize">Tim Lebo</span></a>
+                  <span property="foaf:name" class="deemphasize">Tim Lebo</span>
+                  <span rel="rdf:type"       class="deemphasize" resource="[foaf:Person]"/>
+               </a>
             </p>
          </div>

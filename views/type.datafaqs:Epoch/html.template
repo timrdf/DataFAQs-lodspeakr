@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
     "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" {% for i, ns in base.ns %}xmlns:{{i}}="{{ns}}" 
+<html xmlns="http://www.w3.org/1999/xhtml" {% for i, ns in lodspk.ns %}xmlns:{{i}}="{{ns}}" 
     {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
    <head>
       <title>Page about {{lodspk.this.value}}</title>
@@ -13,8 +13,8 @@
       <link rel="alternate" type="application/json"    title="RDFJSON Version"   href="{{lodspk.this.value}}.json" />
       <script type="text/javascript" src="../js/jquery-1.7.1.js"></script>
       <script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
-      <link href="../css/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css" media="screen" />
-      <link href="../css/configure-epoch.css" rel="stylesheet" type="text/css" media="screen" />
+      <link href="../../static/css/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css" media="screen" />
+      <link href="../../static/css/configure-epoch.css" rel="stylesheet" type="text/css" media="screen" />
       <script>
       $(function() {
          $( "#tabs" ).tabs();
@@ -22,9 +22,9 @@
       </script>
     </head>
     <body about="{{lodspk.this.value}}">
-       <center>
+       <div style="text-align: center">
           <a href="https://github.com/timrdf/DataFAQs/wiki">
-             <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo"/ width="40%"/>
+             <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo" width="40%"/>
           </a>
           <p>
             <a href="{{lodspk.baseUrl}}">home</a>
@@ -103,6 +103,6 @@
                <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
             </div>
          </div-->
-       </center>
+       </div>
    </body>
 </html>
