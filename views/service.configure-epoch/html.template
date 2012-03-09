@@ -2,8 +2,8 @@
    <head xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
          xmlns:datafaqs="http://purl.org/twc/vocab/datafaqs#">                                                                  
-      <link rel="stylesheet" type="text/css" media="screen" href="../css/configure-epoch.css" />
-      <script type="text/javascript" src="../js/jquery-1.7.1.js"></script>          
+      <link rel="stylesheet" type="text/css" media="screen" href="css/configure-epoch.css" />
+      <script type="text/javascript" src="js/jquery-1.7.1.js"></script>          
       <script type="text/javascript">                                         
 
       function beetlejuice(uri) {
@@ -64,9 +64,9 @@
          xmlns:prov="http://www.w3.org/ns/prov-o/">
 
       <div>
-         <center>
+         <div style="text-align: center">
             <a href="https://github.com/timrdf/DataFAQs/wiki">
-               <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo"/ width="40%"/>
+               <img src="https://github.com/timrdf/DataFAQs/raw/master/doc/DataFAQs.png" alt="DataFAQs logo" width="40%"/>
             </a>
             <p>
               <a href="{{lodspk.baseUrl}}">home</a>
@@ -74,13 +74,13 @@
               | <a href="dataset">datasets</a>
               | <a href="epoch">epochs</a>
             </p>
-         </center>
+         </div>
       </div>
 
       <div class="warning">
-         <center>
+         <div>
             <p>Note: This page is for illustration purposes only. It is not functional yet.</p>
-         </center>
+         </div>
       </div>
 
       <div id="epoch" class="configuration">
@@ -102,7 +102,7 @@
                <th>select-faqts</th>
                <th>Requires input type</th>
             </tr>
-            {%for i in models.biordf.FAqTServiceCollection%}
+            {%for i in models.biordf.faqt_service_collection%}
                <tr>
                   <td about="{{i.service.value}}" typeof="datafaqs:FAqTSelector"><a href='{{i.service.value}}'>{{i.service.value}}</a></td>
                   <td about='{{i.input.value}}'><a href='{{i.input.value}}'>{{i.input.value}}</a></td>
@@ -110,13 +110,13 @@
             {%endfor%}
          </table>
          <select class="core-service">
-            {%for i in models.biordf.FAqTServiceCollection%}
+            {%for i in models.biordf.faqt_service_collection%}
                <option about='{{i.service.value}}' typeof="datafaqs:FAqTSelector" value='{{i.service.value}}'>{{i.service.value}}</option>
             {%endfor%}
          </select>
          with input: (new) <input type="text" name="lname" /> or previous:
          <select class="core input">
-            {%for row in models.biordf.local.PreviousFAqTServiceInputs%}
+            {%for row in models.biordf.local.previous_faqt_service_inputs%}
                <option value='{{row.input.value}}'>{{row.input.value}}</option>
             {%endfor%}
          </select>
@@ -131,7 +131,7 @@
                <th>select-datasets</th>
                <th>Requires input type</th>
             </tr>
-            {%for i in models.biordf.DatasetCollection%}
+            {%for i in models.biordf.dataset_collection%}
                <tr>
                   <td><a href='{{i.service.value}}'>{{i.service.value}}</a></td>
                   <td><a href='{{i.input.value}}'>{{i.input.value}}</a></td>
@@ -139,13 +139,13 @@
             {%endfor%}
          </table>
          <select class="core-service">
-            {%for i in models.biordf.DatasetCollection%}
+            {%for i in models.biordf.dataset_collection%}
                <option about='{{i.service.value}}' typeof="datafaqs:DatasetSelector" value='{{i.service.value}}'>{{i.service.value}}</option>
             {%endfor%}
          </select>
          with input: (new) <input type="text" name="lname" /> or previous: 
          <select class="core input">
-            {%for i in models.biordf.local.PreviousDatasetsInputs%}
+            {%for i in models.biordf.local.previous_datasets_inputs%}
                <option value='{{i.input.value}}'>{{i.input.value}}</option>
             {%endfor%}
          </select>
@@ -162,7 +162,7 @@
                      <th>augment-datasets</th>
                      <th>Requires input type</th>
                   </tr>
-                  {%for i in models.biordf.WithReferences%}
+                  {%for i in models.biordf.with_references%}
                      <tr>
                         <td><a href='{{i.service.value}}'>{{i.service.value}}</a></td>
                         <td><a href='{{i.input.value}}'>{{i.input.value}}</a></td>
@@ -170,7 +170,7 @@
                   {%endfor%}
                </table>
                <select class="core-service">
-                  {%for i in models.biordf.WithReferences%}
+                  {%for i in models.biordf.with_references%}
                      <option value='{{i.service.value}}'>{{i.service.value}}</option>
                   {%endfor%}
                </select>
@@ -187,12 +187,12 @@
 
       </div> <!-- select-datasets -->
 
-      <center about="#" typeof="datafaqs:FAqTBrickExplorer">
+      <div style="text-align: center" about="#" typeof="datafaqs:FAqTBrickExplorer">
          <a rel="datafaqs:powered_by" href="http://www.w3.org/TR/rdfa-syntax"><img src="image/sw-rdfa-orange.png" alt="Powered by RDFa" width="120px"/></a>
          <a rel="datafaqs:powered_by" href="http://test.ckan.net/"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/ckan/ckan_logo_box.png" alt="Powered by CKAN" width="80px"/></a>
          <a rel="datafaqs:powered_by" href="http://sadiframework.org/content/"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/sadi/sadi-header.png" alt="Powered by SADI" width="150px"/></a>
          <a rel="datafaqs:powered_by" href="http://lodspeakr.org"><img src="https://github.com/timrdf/DataFAQs/raw/master/doc/lodspeakr/lodspeakr_4.png" alt="Powered by LODSPeaKr" width="100px"/></a>
          <a rel="datafaqs:powered_by" href="http://code.google.com/p/surfrdf/"><img src="http://surfrdf.googlecode.com/files/surf-logo-poweredby.png" alt="Powered by SuRF" width="150px"/></a>
-      </center>
+      </div>
    </body>                                                              
 </html>
